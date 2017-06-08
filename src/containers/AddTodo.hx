@@ -1,0 +1,55 @@
+package containers;
+
+import js.html.InputElement;
+import react.Partial;
+import react.ReactComponent;
+import react.ReactMacro.jsx;
+import redux.Redux;
+import redux.react.ReactContainer;
+import TodoListStore.TodoAction;
+
+using StringTools;
+
+class AddTodo extends ReactContainer<AddTodoComponent>
+{
+	@:connect
+	static function addTodo(dispatch:Dispatch, todo:String):Void
+	{
+		dispatch(TodoAction.Add(todo));
+	}
+}
+
+typedef AddTodoComponentProps = {
+	var addTodo:String -> Void;
+}
+
+class AddTodoComponent extends ReactComponentOfProps<AddTodoComponentProps>
+{
+	var input:InputElement;
+
+	override public function render()
+	{
+		return jsx('
+			<div>
+				<form onSubmit=$onSubmit>
+					<input ref=$onInputRef />
+					<button type="submit">Add Todo</button>
+				</form>
+			</div>
+		');
+	}
+
+	function onInputRef(node:InputElement)
+	{
+		input = node;
+	}
+
+	function onSubmit(e)
+	{
+		e.preventDefault();
+		if (input.value.trim() == "") return;
+
+		props.addTodo(input.value);
+		input.value = '';
+	}
+}

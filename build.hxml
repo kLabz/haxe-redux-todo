@@ -1,0 +1,8 @@
+-lib modular
+-lib react
+-lib redux
+
+-cp src
+-main Main
+
+-js bin/index.js

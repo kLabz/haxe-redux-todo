@@ -1,0 +1,8 @@
+bin/*
+node_modules/
+.haxelib/
+.temp/
+res/libs.js
+res/scss/.sass-cache/
+tests/out
+npm-debug.log

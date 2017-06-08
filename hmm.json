@@ -1,0 +1,19 @@
+{
+  "dependencies": [
+    {
+      "name": "modular",
+      "type": "haxelib",
+      "version": "0.2.0"
+    },
+    {
+      "name": "react",
+      "type": "dev",
+      "path": "/git/haxe-react"
+    },
+    {
+      "name": "redux",
+      "type": "dev",
+      "path": "/git/haxe-redux"
+    }
+  ]
+}
