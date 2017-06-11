@@ -53,3 +53,34 @@ class AddTodoComponent extends ReactComponentOfProps<AddTodoComponentProps>
 		input.value = '';
 	}
 }
+
+/*
+JS version:
+http://redux.js.org/docs/basics/UsageWithReact.html#containersaddtodojs
+
+let AddTodo = ({ dispatch }) => {
+	let input
+
+	return (
+		<div>
+			<form onSubmit={e => {
+				e.preventDefault()
+				if (!input.value.trim()) {
+					return
+				}
+				dispatch(addTodo(input.value))
+				input.value = ''
+			}}>
+				<input ref={node => {
+					input = node
+				}} />
+				<button type="submit">
+					Add Todo
+				</button>
+			</form>
+		</div>
+	)
+}
+
+AddTodo = connect()(AddTodo)
+*/

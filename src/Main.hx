@@ -32,3 +32,26 @@ class Main
 		'), Browser.document.getElementById('app'));
 	}
 }
+
+/*
+JS version:
+http://redux.js.org/docs/basics/UsageWithReact.html#componentsappjs
+http://redux.js.org/docs/basics/UsageWithReact.html#indexjs
+
+const App = () => (
+	<div>
+		<AddTodo />
+		<VisibleTodoList />
+		<Footer />
+	</div>
+)
+
+let store = createStore(todoApp)
+
+render(
+	<Provider store={store}>
+		<App />
+	</Provider>,
+	document.getElementById('root')
+)
+*/
