@@ -20,13 +20,10 @@ class FilterLink extends ReactContainerWithProps<Link, FilterLinkProps>
 		}
 	}
 
-	static function mapDispatchToProps(dispatch:Dispatch, ownProps:FilterLinkProps):Partial<LinkProps>
+	@:connect
+	static function onClick(dispatch:Dispatch, ownProps:FilterLinkProps):Void
 	{
-		return {
-			onClick: function() {
-				dispatch(TodoAction.SetVisibilityFilter(ownProps.filter));
-			}
-		}
+		dispatch(TodoAction.SetVisibilityFilter(ownProps.filter));
 	}
 }
 

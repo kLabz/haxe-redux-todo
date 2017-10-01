@@ -9,6 +9,7 @@
 
         'react': require('react'),
         'react-dom': require('react-dom'),
+        'prop-types': require('prop-types'),
         'redux': require('redux'),
         'react-redux': require('react-redux')
     });
