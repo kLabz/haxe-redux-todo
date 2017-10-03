@@ -2,13 +2,13 @@ package containers;
 
 import react.Partial;
 import redux.Redux;
-import redux.react.ReactContainer;
+import redux.react.ReactConnect.ReactConnector;
 import components.TodoList;
 import TodoListStore.TodoAction;
 import TodoListStore.TodoData;
 import TodoListStore.TodoFilter;
 
-class VisibleTodoList extends ReactContainer<TodoList>
+class VisibleTodoList extends ReactConnector<TodoListProps>
 {
 	static function mapStateToProps(state:ApplicationState, ownProps:Dynamic):Partial<TodoListProps>
 	{
@@ -31,12 +31,27 @@ class VisibleTodoList extends ReactContainer<TodoList>
 	{
 		dispatch(TodoAction.Toggle(id));
 	}
+
+	/*
+	Alternative:
+	```
+	static function mapDispatchToProps(dispatch:Dispatch, ownProps:Dynamic):Partial<TodoListProps>
+	{
+		return {
+			onTodoClick: function(id) {
+				return dispatch(TodoAction.Toggle(id));
+			}
+		};
+	}
+	```
+	*/
 }
 
 /*
 JS version:
 http://redux.js.org/docs/basics/UsageWithReact.html#containersvisibletodolistjs
 
+```
 const getVisibleTodos = (todos, filter) => {
 	switch (filter) {
 		case 'SHOW_ALL':
@@ -66,4 +81,5 @@ const VisibleTodoList = connect(
 	mapStateToProps,
 	mapDispatchToProps
 )(TodoList)
+```
 */

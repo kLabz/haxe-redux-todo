@@ -1,8 +1,6 @@
 package components;
 
-import react.ReactComponent.ReactComponentOfProps;
 import react.ReactMacro.jsx;
-import components.Todo.TodoProps;
 import TodoListStore.TodoData;
 
 typedef TodoListProps = {
@@ -10,9 +8,10 @@ typedef TodoListProps = {
 	var onTodoClick:Int -> Void;
 }
 
-class TodoList extends ReactComponentOfProps<TodoListProps>
+@:jsxStatic('render')
+class TodoList
 {
-	override public function render()
+	static public function render(props:TodoListProps)
 	{
 		var todos = props.todos.map(function(todo) return jsx('
 			<$Todo
@@ -34,6 +33,7 @@ class TodoList extends ReactComponentOfProps<TodoListProps>
 JS version:
 http://redux.js.org/docs/basics/UsageWithReact.html#componentstodolistjs
 
+```
 const TodoList = ({ todos, onTodoClick }) => (
 	<ul>
 		{todos.map(todo =>
@@ -54,4 +54,5 @@ TodoList.propTypes = {
 	}).isRequired).isRequired,
 	onTodoClick: PropTypes.func.isRequired
 }
+```
 */

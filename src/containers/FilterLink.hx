@@ -2,7 +2,7 @@ package containers;
 
 import react.Partial;
 import redux.Redux;
-import redux.react.ReactContainer;
+import redux.react.ReactConnect.ReactConnectorOfProps;
 import components.Link;
 import TodoListStore.TodoAction;
 import TodoListStore.TodoFilter;
@@ -11,8 +11,10 @@ typedef FilterLinkProps = {
 	var filter:TodoFilter;
 }
 
-class FilterLink extends ReactContainerWithProps<Link, FilterLinkProps>
+class FilterLink extends ReactConnectorOfProps<LinkProps, FilterLinkProps>
 {
+	static var wrappedComponent:Link;
+
 	static function mapStateToProps(state:ApplicationState, ownProps:FilterLinkProps):Partial<LinkProps>
 	{
 		return {
@@ -25,12 +27,27 @@ class FilterLink extends ReactContainerWithProps<Link, FilterLinkProps>
 	{
 		dispatch(TodoAction.SetVisibilityFilter(ownProps.filter));
 	}
+
+	/*
+	Alternative:
+	```
+	static function mapDispatchToProps(dispatch:Dispatch, ownProps:FilterLinkProps):Partial<LinkProps>
+	{
+		return {
+			onClick: function() {
+				return dispatch(TodoAction.SetVisibilityFilter(ownProps.filter));
+			}
+		};
+	}
+	```
+	*/
 }
 
 /*
 JS version:
 http://redux.js.org/docs/basics/UsageWithReact.html#containersfilterlinkjs
 
+```
 const mapStateToProps = (state, ownProps) => {
 	return {
 		active: ownProps.filter === state.visibilityFilter
@@ -49,4 +66,5 @@ const FilterLink = connect(
 	mapStateToProps,
 	mapDispatchToProps
 )(Link)
+```
 */

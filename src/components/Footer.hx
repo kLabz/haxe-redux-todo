@@ -1,12 +1,12 @@
 package components;
 
-import react.ReactComponent;
 import react.ReactMacro.jsx;
 import containers.FilterLink;
 
-class Footer extends ReactComponent
+@:jsxStatic('render')
+class Footer
 {
-	override public function render()
+	public static function render()
 	{
 		return jsx('
 			<p>
@@ -22,6 +22,7 @@ class Footer extends ReactComponent
 JS version:
 http://redux.js.org/docs/basics/UsageWithReact.html#componentsfooterjs
 
+```
 const Footer = () => (
 	<p>
 		Show:
@@ -39,4 +40,5 @@ const Footer = () => (
 		</FilterLink>
 	</p>
 )
+```
 */

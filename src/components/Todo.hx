@@ -1,6 +1,5 @@
 package components;
 
-import react.ReactComponent.ReactComponentOfProps;
 import react.ReactMacro.jsx;
 
 typedef TodoProps = {
@@ -9,9 +8,10 @@ typedef TodoProps = {
 	var text:String;
 }
 
-class Todo extends ReactComponentOfProps<TodoProps>
+@:jsxStatic('render')
+class Todo
 {
-	override public function render()
+	static public function render(props:TodoProps)
 	{
 		var style = {
 			textDecoration: props.completed ? 'line-through' : 'none'
@@ -28,6 +28,7 @@ class Todo extends ReactComponentOfProps<TodoProps>
 JS version:
 http://redux.js.org/docs/basics/UsageWithReact.html#componentstodojs
 
+```
 const Todo = ({ onClick, completed, text }) => (
 	<li
 		onClick={onClick}
@@ -44,4 +45,5 @@ Todo.propTypes = {
 	completed: PropTypes.bool.isRequired,
 	text: PropTypes.string.isRequired
 }
+```
 */

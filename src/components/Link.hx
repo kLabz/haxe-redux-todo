@@ -35,6 +35,7 @@ class Link extends ReactComponentOfProps<LinkProps>
 JS version:
 http://redux.js.org/docs/basics/UsageWithReact.html#componentslinkjs
 
+```
 const Link = ({ active, children, onClick }) => {
 	if (active) {
 		return <span>{children}</span>
@@ -57,4 +58,5 @@ Link.propTypes = {
 	children: PropTypes.node.isRequired,
 	onClick: PropTypes.func.isRequired
 }
+```
 */

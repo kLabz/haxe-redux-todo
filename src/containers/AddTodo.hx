@@ -5,13 +5,17 @@ import react.Partial;
 import react.ReactComponent;
 import react.ReactMacro.jsx;
 import redux.Redux;
-import redux.react.ReactContainer;
+import redux.react.ReactConnect.ReactConnector;
 import TodoListStore.TodoAction;
 
 using StringTools;
 
-class AddTodo extends ReactContainer<AddTodoComponent>
+// The connected component will be accessible via `AddTodo.AddTodo` instead of `AddTodo.Connected`
+@:jsxStatic('AddTodo')
+class AddTodo extends ReactConnector<AddTodoComponentProps>
 {
+	static var wrappedComponent:AddTodoComponent;
+
 	@:connect
 	static function addTodo(dispatch:Dispatch, todo:String):Void
 	{
@@ -58,6 +62,7 @@ class AddTodoComponent extends ReactComponentOfProps<AddTodoComponentProps>
 JS version:
 http://redux.js.org/docs/basics/UsageWithReact.html#containersaddtodojs
 
+```
 let AddTodo = ({ dispatch }) => {
 	let input
 
@@ -83,4 +88,5 @@ let AddTodo = ({ dispatch }) => {
 }
 
 AddTodo = connect()(AddTodo)
+```
 */
