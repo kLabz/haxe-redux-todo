@@ -7,15 +7,14 @@
     },
     {
       "name": "react",
-      "type": "git",
       "url": "git@github.com:kLabz/haxe-react.git",
-      "ref": "595451667ee17a19c72e5470985b6c0f55533452"
+      "ref": "a13c93a61a52b25ed76bf85af6d2f49f40978fb2"
     },
     {
       "name": "redux",
       "type": "git",
       "url": "git@github.com:kLabz/haxe-redux.git",
-      "ref": "39fdf8e98a3a4b9f9f4425711d38431b6f00124c"
+      "ref": "8d340a864326cfbf7ce36b2668d6fd3618bcb390"
     }
   ]
 }
