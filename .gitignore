@@ -2,6 +2,9 @@ bin/*
 node_modules/
 .haxelib/
 .temp/
+.build/
+.fzf
+.vim
 res/libs.js
 res/scss/.sass-cache/
 tests/out

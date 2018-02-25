@@ -5,21 +5,20 @@ import react.Partial;
 import react.ReactComponent;
 import react.ReactMacro.jsx;
 import redux.Redux;
-import redux.react.ReactConnect.ReactConnector;
+import redux.react.ReactConnector;
 import TodoListStore.TodoAction;
 
 using StringTools;
 
 // The connected component will be accessible via `AddTodo.AddTodo` instead of `AddTodo.Connected`
 @:jsxStatic('AddTodo')
-class AddTodo extends ReactConnector<AddTodoComponentProps>
+class AddTodo extends ReactConnector<AddTodoComponent, AddTodoComponentProps>
 {
-	static var wrappedComponent:AddTodoComponent;
-
-	@:connect
-	static function addTodo(dispatch:Dispatch, todo:String):Void
+	static function mapDispatchToProps(dispatch:Dispatch):AddTodoComponentProps
 	{
-		dispatch(TodoAction.Add(todo));
+		return {
+			addTodo: function(todo:String) dispatch(TodoAction.Add(todo))
+		};
 	}
 }
 

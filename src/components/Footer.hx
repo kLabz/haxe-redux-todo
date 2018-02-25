@@ -10,9 +10,9 @@ class Footer
 	{
 		return jsx('
 			<p>
-				Show: <$FilterLink filter="SHOW_ALL">All</$FilterLink>
-				, <$FilterLink filter="SHOW_ACTIVE">Active</$FilterLink>
-				, <$FilterLink filter="SHOW_COMPLETED">Completed</$FilterLink>
+				Show: <$FilterLink filter="SHOW_ALL" label="All" />
+				, <$FilterLink filter="SHOW_ACTIVE" label="Active" />
+				, <$FilterLink filter="SHOW_COMPLETED" label="Completed" />
 			</p>
 		');
 	}

@@ -3,7 +3,7 @@
 Implementing react-redux's demo from [here](http://redux.js.org/docs/basics/UsageWithReact.html#implementing-container-components) with new features for [haxe-react](https://github.com/massiveinteractive/haxe-react) and [haxe-redux](https://github.com/elsassph/haxe-redux).
 
 Roadmap:
-* [[PR pending]](https://github.com/massiveinteractive/haxe-react/pull/81) `@:jsxStatic` for functional components
+* [[PR merged]](https://github.com/massiveinteractive/haxe-react/pull/81) `@:jsxStatic` for functional components
 * [[PR pending]](https://github.com/elsassph/haxe-redux/pull/6) High Order Components
 * [TODO] support for [reselect](https://github.com/reactjs/reselect)
 * ?
@@ -27,7 +27,7 @@ class Todo
 }
 ```
 
-Pull request on haxe-react [here](https://github.com/massiveinteractive/haxe-react/pull/81) (pending).
+Pull request on haxe-react [here](https://github.com/massiveinteractive/haxe-react/pull/81) (merged).
 
 ## High Order Components (HOC)
 
@@ -46,15 +46,9 @@ Many compile-time checks are done to ensure typing is correct. Compilation warni
 #### Haxe version
 
 ```haxe
-// A ReactConnector providing `TodoListProps`
-class VisibleTodoList extends ReactConnector<TodoListProps>
+// A ReactConnector providing `TodoListProps`, with `TodoList` as default wrapped component
+class VisibleTodoList extends ReactConnector<TodoList, TodoListProps>
 {
-	// Default component to wrap
-	// If not set, children props will be updated
-	// If not set & no children, will render a React empty node
-	// If set but children available, children props will be updated instead of using this component
-	static var wrappedComponent:TodoList;
-
 	static function mapStateToProps(state:ApplicationState, ownProps:Dynamic):Partial<TodoListProps>
 	{
 		return {
@@ -175,34 +169,13 @@ TodoList.propTypes = {
 }
 ```
 
-### Reusing the HOC with another wrapped component
-
-In the above example, you can also use another component instead of `TodoList`,
-by using it as `children`:
-
-```haxe
-	override function render()
-	{
-		return jsx('
-			<$VisibleTodoList>
-				<$MyOtherTodoList />
-			</$VisibleTodoList>
-		');
-	}
-```
-
-The generated props would be added to every direct child's props,
-and will override the default wrapped component.
-
 ### HOC's own props
 
 If your HOC needs props, you can extend `ReactConnectorOfProps` instead of `ReactConnector`:
 
 ```haxe
-class FilterLink extends ReactConnectorOfProps<LinkProps, FilterLinkProps>
+class FilterLink extends ReactConnectorOfProps<Link, LinkProps, FilterLinkProps>
 {
-	static var wrappedComponent:Link;
-
 	static function mapStateToProps(state:ApplicationState, ownProps:FilterLinkProps):Partial<LinkProps>
 	{
 		return {
@@ -221,52 +194,121 @@ class FilterLink extends ReactConnectorOfProps<LinkProps, FilterLinkProps>
 }
 ```
 
-You can then use it like this (String `props.children` will be ignored
-since it is not a valid element according to `React.isValidElement()`,
-so the default wrapped component will be used):
+You can then use it like this:
 
 ```haxe
 jsx('
 	<ul>
 		<li>
-			<$FilterLink filter="SHOW_ALL">All</$FilterLink>
+			<$FilterLink filter="SHOW_ALL" label="All" />
 		</li>
 		<li>
-			<$FilterLink filter="SHOW_ACTIVE">Active</$FilterLink>
+			<$FilterLink filter="SHOW_ACTIVE" label="Active" />
 		</li>
 		<li>
-			<$FilterLink filter="SHOW_COMPLETED">Completed</$FilterLink>
+			<$FilterLink filter="SHOW_COMPLETED" label="Completed" />
 		</li>
 	</ul>
 ');
 ```
 
-### Using `@:connect` alternative
+### Reusing the HOC with another wrapped component
 
-Instead of declaring `mapDispatchToProps`, you can add a `@:connect` meta to any function
-using `dispatch` as first argument (and `ownProps` too if you need access to the HOC's own props).
-This will generate `mapDispatchToProps` accordingly.
-
-You can then replace:
+In the above example, you can also use another component instead of `TodoList`, by using it as `children`:
 
 ```haxe
-	static function mapDispatchToProps(dispatch:Dispatch, ownProps:Dynamic):Partial<TodoListProps>
+	override function render()
 	{
-		return {
-			onTodoClick: function(id) {
-				return dispatch(TodoAction.Toggle(id));
-			}
-		};
+		return jsx('
+			<$VisibleTodoList>
+				<$MyOtherTodoList />
+			</$VisibleTodoList>
+		');
 	}
 ```
 
-By:
+The generated props would be added to every direct child's props, and will override the default wrapped component.
 
+You can also create HOCs without binding them to specific components, with `ReactGenericConnector<TProps>` or `ReactGenericConnectorOfProps<TProps, TOwnProps>`.
+They will return an empty node at runtime if you do not provide any children, and issue a `console.error()` if you compiled with `-debug`.
+
+### HOC composition
+
+#### Note
+
+HOC will not pass automatically their own props to their children, you will have to do so manually (`ReactUtil.copy()` can help).
+
+Example:
 ```haxe
-	@:connect
-	static function onTodoClick(dispatch:Dispatch, id:Int):Void
+	static function mapStateToProps(state:ApplicationState, ownProps:FilterLinkProps):Partial<LinkProps>
 	{
-		dispatch(TodoAction.Toggle(id));
+		return copyWithout(ownProps, {
+			active: ownProps.filter == state.todoList.visibilityFilter
+		}, ['children']);
 	}
 ```
 
+#### Composition hardcoded inside a connector
+
+You can use a connector accepting ownProps as `TComponent` for another connector.
+
+#### Composition via jsx
+
+```haxe
+jsx('
+	<$FirstConnector>
+		<$SecondConnector>
+			<$Component />
+		</$SecondConnector>
+	</$FirstConnector>
+');
+```
+
+### ReactConnector API
+
+```haxe
+/**
+  A react-redux connector designed for a component TComponent, providing TProps
+  from redux store.
+*/
+typedef ReactConnector<TComponent, TProps> = ReactConnect<TComponent, TProps, TVoid>;
+
+/**
+  A react-redux connector designed for a component TComponent, providing TProps
+  from redux store and the connector's props (TOwnProps)
+*/
+typedef ReactConnectorOfProps<TComponent, TComponentProps, TOwnProps> = ReactConnect<TComponent, TComponentProps, TOwnProps>;
+
+/**
+  A react-redux connector for use with any component compatible with TProps.
+  Will return an empty react node at runtime if used without children, with an
+  error message if compiled with -debug.
+*/
+typedef ReactGenericConnector<TProps> = ReactConnect<TVoid, TProps, TVoid>;
+
+/**
+  A react-redux connector for use with any component compatible with TProps.
+  This connector also accepts props of type TOwnProps.
+  Will return an empty react node at runtime if used without children, with an
+  error message if compiled with -debug.
+*/
+typedef ReactGenericConnectorOfProps<TProps, TOwnProps> = ReactConnect<TVoid, TProps, TOwnProps>;
+```
+
+### General notes
+
+ * Explicit typing is needed for `mapStateToProps` and `mapDispatchToProps` functions, to allow macros to check typing
+ * There is no way of knowing you application store's state type, so appState is typed as `Dynamic`
+ * Connectors cannot use a functional component as default component, unless it's a `@:jsxStatic` class
+ * Connectors handle `defaultProps` when they have ownProps
+ * `displayName`s are handled, to allow easier debugging with react extension
+
+ * React-redux defaults to `(dispatch) => ({dispatch})` for `mapDispatchToProps` when you pass `null`, meaning `dispatch` will be provided if you do not define a `mapDispatchToProps` returning an object. This behavior has *not* been reproduced here, instead the macro will use a function returning an empty object.
+
+ * This PR needs two PRs from haxe-react:
+	 * [#86](https://github.com/massiveinteractive/haxe-react/pull/86) for its JsxStaticMacro refactoring
+	 * [#96](https://github.com/massiveinteractive/haxe-react/pull/96) for `ReactUtil.copyWithout()`
+
+### Tests
+
+Tests have been added, using `enzyme`. You can find the sources [here](https://github.com/kLabz/haxe-redux-todo/blob/redux/6/src/test/suite/ReactConnectorTests.hx).

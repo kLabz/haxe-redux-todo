@@ -5,19 +5,26 @@
     "clean": "shx rm -rf bin",
     "libs": "browserify scripts/libs.js -o res/libs.js -d",
     "serve": "livereloadx -s bin -p $npm_package_config_livereload_port",
-    "prepare": "node scripts/prepare.js"
+    "prepare": "node scripts/prepare.js",
+    "test": "haxe test.hxml && node .build/test.js",
+    "test-watch": "nodemon -w src/ -e hx -x 'haxe test.hxml && node .build/test.js'",
+    "build-watch": "nodemon -w src/ -e hx -x 'haxe build.hxml'"
   },
   "dependencies": {
-    "haxe-modular": "^0.1.7",
     "prop-types": "^15.6.0",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2"
   },
   "devDependencies": {
-    "browserify": "^13.1.1",
-    "livereloadx": "^0.3.9",
+    "browserify": "^13.3.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "haxe-modular": "^0.1.7",
+    "jsdom": "^11.6.2",
+    "livereloadx": "^0.3.10",
+    "nodemon": "^1.15.1",
     "shelljs": "^0.7.8",
     "shx": "^0.2.0"
   },

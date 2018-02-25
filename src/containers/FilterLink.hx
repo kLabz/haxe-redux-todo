@@ -2,35 +2,26 @@ package containers;
 
 import react.Partial;
 import redux.Redux;
-import redux.react.ReactConnect.ReactConnectorOfProps;
+import redux.react.ReactConnector;
 import components.Link;
 import TodoListStore.TodoAction;
 import TodoListStore.TodoFilter;
 
 typedef FilterLinkProps = {
 	var filter:TodoFilter;
+	var label:String;
 }
 
-class FilterLink extends ReactConnectorOfProps<LinkProps, FilterLinkProps>
+class FilterLink extends ReactConnectorOfProps<Link, LinkProps, FilterLinkProps>
 {
-	static var wrappedComponent:Link;
-
 	static function mapStateToProps(state:ApplicationState, ownProps:FilterLinkProps):Partial<LinkProps>
 	{
 		return {
-			active: ownProps.filter == state.todoList.visibilityFilter
+			active: ownProps.filter == state.todoList.visibilityFilter,
+			label: ownProps.label
 		}
 	}
 
-	@:connect
-	static function onClick(dispatch:Dispatch, ownProps:FilterLinkProps):Void
-	{
-		dispatch(TodoAction.SetVisibilityFilter(ownProps.filter));
-	}
-
-	/*
-	Alternative:
-	```
 	static function mapDispatchToProps(dispatch:Dispatch, ownProps:FilterLinkProps):Partial<LinkProps>
 	{
 		return {
@@ -39,8 +30,6 @@ class FilterLink extends ReactConnectorOfProps<LinkProps, FilterLinkProps>
 			}
 		};
 	}
-	```
-	*/
 }
 
 /*

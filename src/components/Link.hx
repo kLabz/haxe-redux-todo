@@ -7,7 +7,7 @@ import react.ReactMacro.jsx;
 typedef LinkProps = {
 	var onClick:Void -> Void;
 	var active:Bool;
-	var children:Dynamic;
+	var label:String;
 }
 
 class Link extends ReactComponentOfProps<LinkProps>
@@ -15,11 +15,11 @@ class Link extends ReactComponentOfProps<LinkProps>
 	override public function render()
 	{
 		if (props.active)
-			return jsx('<span>${props.children}</span>');
+			return jsx('<span>${props.label}</span>');
 
 		return jsx('
 			<a href="#" onClick=$onClick>
-				${props.children}
+				${props.label}
 			</a>
 		');
 	}

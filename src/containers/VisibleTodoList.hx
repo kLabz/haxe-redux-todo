@@ -1,16 +1,17 @@
 package containers;
 
 import react.Partial;
+import react.ReactComponent;
 import redux.Redux;
-import redux.react.ReactConnect.ReactConnector;
+import redux.react.ReactConnector;
 import components.TodoList;
 import TodoListStore.TodoAction;
 import TodoListStore.TodoData;
 import TodoListStore.TodoFilter;
 
-class VisibleTodoList extends ReactConnector<TodoListProps>
+class VisibleTodoList extends ReactGenericConnector<TodoListProps>
 {
-	static function mapStateToProps(state:ApplicationState, ownProps:Dynamic):Partial<TodoListProps>
+	static function mapStateToProps(state:ApplicationState):Partial<TodoListProps>
 	{
 		return {
 			todos: getVisibleTodos(state.todoList.todos, state.todoList.visibilityFilter)
@@ -26,25 +27,12 @@ class VisibleTodoList extends ReactConnector<TodoListProps>
 		}
 	}
 
-	@:connect
-	static function onTodoClick(dispatch:Dispatch, id:Int):Void
-	{
-		dispatch(TodoAction.Toggle(id));
-	}
-
-	/*
-	Alternative:
-	```
-	static function mapDispatchToProps(dispatch:Dispatch, ownProps:Dynamic):Partial<TodoListProps>
+	static function mapDispatchToProps(dispatch:Dispatch):Partial<TodoListProps>
 	{
 		return {
-			onTodoClick: function(id) {
-				return dispatch(TodoAction.Toggle(id));
-			}
+			onTodoClick: function(id:Int) return dispatch(TodoAction.Toggle(id))
 		};
 	}
-	```
-	*/
 }
 
 /*
@@ -83,3 +71,4 @@ const VisibleTodoList = connect(
 )(TodoList)
 ```
 */
+

@@ -1,0 +1,15 @@
+-js .build/test.js
+-main test.Tests
+
+-cp src
+
+-lib enzyme
+-lib buddy
+-lib react
+-lib redux
+
+-D nodejs
+-D buddy-colors
+
+-debug
+

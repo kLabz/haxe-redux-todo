@@ -6,15 +6,20 @@
       "version": "0.2.0"
     },
     {
+      "name": "enzyme",
+      "type": "haxelib",
+      "version": "0.5.0"
+    },
+    {
       "name": "react",
       "url": "git@github.com:kLabz/haxe-react.git",
-      "ref": "a13c93a61a52b25ed76bf85af6d2f49f40978fb2"
+      "ref": "3150f53c0dfc2d5d1b4640f9f6a85cd6b9fa9aca"
     },
     {
       "name": "redux",
       "type": "git",
       "url": "git@github.com:kLabz/haxe-redux.git",
-      "ref": "8d340a864326cfbf7ce36b2668d6fd3618bcb390"
+      "ref": "20f5227fabd786fe84e99c63044da959b2f04e87"
     }
   ]
 }
