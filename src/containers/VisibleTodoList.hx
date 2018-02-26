@@ -5,7 +5,7 @@ import react.ReactComponent;
 import redux.Redux;
 import redux.react.ReactConnector;
 import components.TodoList;
-import TodoListStore.TodoAction;
+import thunk.TodoThunk;
 import TodoListStore.TodoData;
 import TodoListStore.TodoFilter;
 
@@ -30,7 +30,7 @@ class VisibleTodoList extends ReactGenericConnector<TodoListProps>
 	static function mapDispatchToProps(dispatch:Dispatch):Partial<TodoListProps>
 	{
 		return {
-			onTodoClick: function(id:Int) return dispatch(TodoAction.Toggle(id))
+			onTodoClick: function(id:Int) return dispatch(TodoThunk.toggle(id))
 		};
 	}
 }

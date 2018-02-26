@@ -1,12 +1,11 @@
 package containers;
 
 import js.html.InputElement;
-import react.Partial;
 import react.ReactComponent;
 import react.ReactMacro.jsx;
 import redux.Redux;
 import redux.react.ReactConnector;
-import TodoListStore.TodoAction;
+import thunk.TodoThunk;
 
 using StringTools;
 
@@ -17,7 +16,7 @@ class AddTodo extends ReactConnector<AddTodoComponent, AddTodoComponentProps>
 	static function mapDispatchToProps(dispatch:Dispatch):AddTodoComponentProps
 	{
 		return {
-			addTodo: function(todo:String) dispatch(TodoAction.Add(todo))
+			addTodo: function(todo:String) return dispatch(TodoThunk.add(todo))
 		};
 	}
 }

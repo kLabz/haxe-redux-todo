@@ -4,7 +4,7 @@ import react.Partial;
 import redux.Redux;
 import redux.react.ReactConnector;
 import components.Link;
-import TodoListStore.TodoAction;
+import thunk.TodoThunk;
 import TodoListStore.TodoFilter;
 
 typedef FilterLinkProps = {
@@ -25,9 +25,7 @@ class FilterLink extends ReactConnectorOfProps<Link, LinkProps, FilterLinkProps>
 	static function mapDispatchToProps(dispatch:Dispatch, ownProps:FilterLinkProps):Partial<LinkProps>
 	{
 		return {
-			onClick: function() {
-				return dispatch(TodoAction.SetVisibilityFilter(ownProps.filter));
-			}
+			onClick: function() return dispatch(TodoThunk.filter(ownProps.filter))
 		};
 	}
 }
