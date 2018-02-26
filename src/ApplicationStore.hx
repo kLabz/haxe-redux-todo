@@ -1,6 +1,8 @@
 import redux.Redux;
 import redux.Store;
 import redux.StoreBuilder.*;
+import redux.thunk.Thunk;
+import redux.thunk.ThunkMiddleware;
 import TodoListStore;
 
 class ApplicationStore
@@ -18,13 +20,10 @@ class ApplicationStore
 
 		// create middleware normally, excepted you must use
 		// 'StoreBuilder.mapMiddleware' to wrap the Enum-based middleware
-		// var middleware = Redux.applyMiddleware(
-		// 	mapMiddleware(TodoAction, todoList)
-		// );
+		var middleware = Redux.applyMiddleware(
+			mapMiddleware(Thunk, new ThunkMiddleware({custom: "data"}))
+		);
 
-		// user 'StoreBuilder.createStore' helper to automatically wire
-		// the Redux devtools browser extension:
-		// https://github.com/zalmoxisus/redux-devtools-extension
-		return createStore(rootReducer, null); //, middleware
+		return createStore(rootReducer, null, middleware);
 	}
 }

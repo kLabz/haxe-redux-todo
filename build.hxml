@@ -4,5 +4,6 @@
 
 -cp src
 -main Main
+-debug
 
 -js bin/index.js
