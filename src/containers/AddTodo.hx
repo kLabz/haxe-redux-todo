@@ -4,29 +4,26 @@ import js.html.InputElement;
 import react.ReactComponent;
 import react.ReactMacro.jsx;
 import redux.Redux;
+import redux.react.ReactRedux.connect;
 import redux.react.ReactConnector;
 import thunk.TodoThunk;
 
 using StringTools;
 
-// The connected component will be accessible via `AddTodo.AddTodo` instead of `AddTodo.Connected`
-@:jsxStatic('AddTodo')
-class AddTodo extends ReactConnector<AddTodoComponent, AddTodoComponentProps>
+typedef AddTodoProps = {
+	var addTodo:String -> Void;
+}
+
+@:connect
+class AddTodo extends ReactComponentOfProps<AddTodoProps>
 {
-	static function mapDispatchToProps(dispatch:Dispatch):AddTodoComponentProps
+	static function mapDispatchToProps(dispatch:Dispatch):AddTodoProps
 	{
 		return {
 			addTodo: function(todo:String) return dispatch(TodoThunk.add(todo))
 		};
 	}
-}
 
-typedef AddTodoComponentProps = {
-	var addTodo:String -> Void;
-}
-
-class AddTodoComponent extends ReactComponentOfProps<AddTodoComponentProps>
-{
 	var input:InputElement;
 
 	override public function render()
