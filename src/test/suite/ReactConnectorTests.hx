@@ -1,12 +1,13 @@
 package test.suite;
 
 import buddy.SingleSuite;
-import redux.react.Provider;
-
+import enzyme.EnzymeRedux;
 import enzyme.EnzymeRedux.mountWithState as mount;
 import react.ReactMacro.jsx;
 import react.ReactComponent;
 import react.ReactUtil;
+import redux.react.Provider;
+import redux.react.ReactRedux.connect;
 import test.component.*;
 
 using buddy.Should;
@@ -14,6 +15,79 @@ using enzyme.EnzymeMatchers;
 
 class ReactConnectorTests extends SingleSuite {
 	public function new() {
+		describe("ReactRedux connect(...)", {
+			it("should work without arguments", {
+				var Comp = connect()(BasicComponent);
+				var wrapper = mount(jsx('<Comp />'), {});
+				wrapper.find(BasicComponent).length.should.be(1);
+			});
+
+			it("should handle mapStateToProps factory", {
+				var numInstances = 0;
+
+				var mapStateToProps = function() {
+					numInstances++;
+
+					return function(state:Dynamic, ownProps:Dynamic):Dynamic {
+						return ReactUtil.copy(ownProps);
+					};
+				};
+
+				var store = EnzymeRedux.createMockedStore();
+				var Comp1 = connect(mapStateToProps)(JsxStaticComponent.render);
+				var Comp2 = connect(mapStateToProps)(JsxStaticComponent.render);
+
+				var wrapper = mount(jsx('
+					<Provider store=${store}>
+						<WrapperWithState comp1={Comp1} comp2={Comp2} />
+					</Provider>
+				'));
+
+				numInstances.should.be(2);
+
+				var btn = wrapper.find('button');
+				btn.length.should.be(1);
+				btn.text().should.be('0');
+				btn.simulate('click');
+				numInstances.should.be(2);
+				btn.text().should.be('1');
+			});
+
+			it("should accept mapDispatchToProps as an object", {
+				var Comp = connect(null, {})(BasicComponent);
+				var wrapper = mount(jsx('<Comp />'), {});
+				wrapper.find(BasicComponent).length.should.be(1);
+			});
+
+			it("should handle mapDispatchToProps factory", {
+				var numInstances = 0;
+
+				var mapDispatchToProps = function() {
+					numInstances++;
+					return function() return {};
+				};
+
+				var store = EnzymeRedux.createMockedStore();
+				var Comp1 = connect(null, mapDispatchToProps)(JsxStaticComponent.render);
+				var Comp2 = connect(null, mapDispatchToProps)(JsxStaticComponent.render);
+
+				var wrapper = mount(jsx('
+					<Provider store=${store}>
+						<WrapperWithState comp1={Comp1} comp2={Comp2} />
+					</Provider>
+				'));
+
+				numInstances.should.be(2);
+
+				var btn = wrapper.find('button');
+				btn.length.should.be(1);
+				btn.text().should.be('0');
+				btn.simulate('click');
+				numInstances.should.be(2);
+				btn.text().should.be('1');
+			});
+		});
+
 		describe("ReactConnector<TComponent, TProps>", {
 			it("should combine mapStateToProps and mapDispatchToProps", {
 				var wrapper = mount(jsx('<BasicConnector />'), {});
@@ -80,7 +154,7 @@ class ReactConnectorTests extends SingleSuite {
 			});
 
 			it("should be independant from other instances", {
-				var store = enzyme.EnzymeRedux.createMockedStore();
+				var store = EnzymeRedux.createMockedStore();
 
 				var wrapper = mount(jsx('
 					<Provider store=${store}>
