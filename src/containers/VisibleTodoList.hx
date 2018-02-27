@@ -6,29 +6,18 @@ import redux.Redux;
 import redux.react.ReactConnector;
 import components.TodoList;
 import thunk.TodoThunk;
+import selectors.TodoSelectors;
 import TodoListStore.TodoData;
 import TodoListStore.TodoFilter;
 
-class VisibleTodoList extends ReactGenericConnector<TodoListProps>
-{
-	static function mapStateToProps(state:ApplicationState):Partial<TodoListProps>
-	{
+class VisibleTodoList extends ReactGenericConnector<TodoListProps> {
+	static function mapStateToProps(state:ApplicationState):Partial<TodoListProps> {
 		return {
-			todos: getVisibleTodos(state.todoList.todos, state.todoList.visibilityFilter)
-		}
+			todos: TodoSelectors.getVisibleTodos(state)
+		};
 	}
 
-	static function getVisibleTodos(todos:Array<TodoData>, filter:TodoFilter)
-	{
-		return switch (filter) {
-			case SHOW_ALL: todos;
-			case SHOW_COMPLETED: todos.filter(function(t) return t.completed);
-			case SHOW_ACTIVE: todos.filter(function(t) return !t.completed);
-		}
-	}
-
-	static function mapDispatchToProps(dispatch:Dispatch):Partial<TodoListProps>
-	{
+	static function mapDispatchToProps(dispatch:Dispatch):Partial<TodoListProps> {
 		return {
 			onTodoClick: function(id:Int) return dispatch(TodoThunk.toggle(id))
 		};
@@ -38,22 +27,29 @@ class VisibleTodoList extends ReactGenericConnector<TodoListProps>
 /*
 JS version:
 http://redux.js.org/docs/basics/UsageWithReact.html#containersvisibletodolistjs
+https://redux.js.org/recipes/computing-derived-data
 
 ```
-const getVisibleTodos = (todos, filter) => {
-	switch (filter) {
-		case 'SHOW_ALL':
-			return todos
-		case 'SHOW_COMPLETED':
-			return todos.filter(t => t.completed)
-		case 'SHOW_ACTIVE':
-			return todos.filter(t => !t.completed)
+const getVisibilityFilter = state => state.visibilityFilter
+const getTodos = state => state.todos
+ 
+export const getVisibleTodos = createSelector(
+	[getVisibilityFilter, getTodos],
+	(visibilityFilter, todos) => {
+		switch (visibilityFilter) {
+			case 'SHOW_ALL':
+				return todos
+			case 'SHOW_COMPLETED':
+				return todos.filter(t => t.completed)
+			case 'SHOW_ACTIVE':
+				return todos.filter(t => !t.completed)
+		}
 	}
-}
+)
 
 const mapStateToProps = (state) => {
 	return {
-		todos: getVisibleTodos(state.todos, state.visibilityFilter)
+		todos: getVisibleTodos(state)
 	}
 }
 
