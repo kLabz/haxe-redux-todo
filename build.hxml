@@ -1,6 +1,7 @@
 -lib modular
 -lib react
 -lib redux
+-lib reselect
 
 -cp src
 -main Main
