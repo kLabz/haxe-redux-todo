@@ -11,9 +11,13 @@ import TodoListStore.TodoData;
 import TodoListStore.TodoFilter;
 
 class VisibleTodoList extends ReactGenericConnector<TodoListProps> {
-	static function mapStateToProps(state:ApplicationState):Partial<TodoListProps> {
-		return {
-			todos: TodoSelectors.getVisibleTodos(state)
+	static function mapStateToProps() {
+		var getVisibleTodos = TodoSelectors.makeGetVisibleTodos();
+
+		return function(state:ApplicationState):Partial<TodoListProps> {
+			return {
+				todos: getVisibleTodos(state)
+			};
 		};
 	}
 
