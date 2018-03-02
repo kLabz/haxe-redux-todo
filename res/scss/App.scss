@@ -23,6 +23,15 @@ body {
 		width: 100%;
 		height: 100%;
 	}
+
+	&::before {
+		content: attr(data-target);
+		position: absolute;
+		top: .5rem;
+		right: .5rem;
+		font-size: .7rem;
+		color: $color-text-faded;
+	}
 }
 
 * {

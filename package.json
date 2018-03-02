@@ -2,7 +2,10 @@
   "name": "haxe-redux-todo-app",
   "version": "0.0.0",
   "scripts": {
-    "build": "cross-env NODE_ENV=production webpack",
+    "build": "cross-env NODE_ENV=development webpack",
+    "build:prod": "cross-env NODE_ENV=production webpack",
+    "build:cordova:android": "cross-env NODE_ENV=development TARGET=cordova_android webpack && cd cordova && cordova run android",
+    "build:cordova:android:prod": "cross-env NODE_ENV=production TARGET=cordova_android webpack && cd cordova && cordova run android",
     "start": "nodemon -w webpack.config.js -x './node_modules/.bin/webpack-dev-server --host 0.0.0.0'",
     "test": "haxe --connect 9009 test.hxml && node .build/test.js",
     "test-watch": "nodemon -w src/ -e hx -x 'haxe --connect 9009 test.hxml && node .build/test.js'",
@@ -17,11 +20,14 @@
     "reselect": "^3.0.1"
   },
   "devDependencies": {
+    "clean-webpack-plugin": "^0.1.18",
     "copy-webpack-plugin": "^4.3.1",
+    "cordova": "^8.0.0",
     "cross-env": "^5.1.1",
     "css-loader": "^0.28.4",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
+    "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^0.11.2",
     "haxe-loader": "^0.7.3",
     "html-webpack-plugin": "^2.29.0",
@@ -32,7 +38,7 @@
     "pug-loader": "^2.3.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
-    "webpack": "^3.0.0",
+    "webpack": "^3.4.1",
     "webpack-dev-server": "^2.10.0"
   }
 }

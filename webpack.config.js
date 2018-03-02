@@ -1,51 +1,45 @@
-//
-// Webpack documentation is fairly extensive,
-// just search on https://webpack.js.org/
-//
-// Be careful: there are a lot of outdated examples/samples,
-// so always check the official documentation!
-//
-//
-
 const path = require('path');
 
-// Plugins
+const buildMode = process.env.NODE_ENV || 'development';
+const buildTarget = process.env.TARGET || 'web';
+
+const isProd = buildMode === 'production';
+console.log(isProd);
+const isCordova = buildTarget.startsWith('cordova');
+
+const sourcemapsMode = isProd ? 'eval-source-map' : undefined;
+const dist = isCordova ? path.resolve(__dirname, 'cordova/www') : path.resolve(__dirname, '.build');
+
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-// Options
-const buildMode = process.env.NODE_ENV || 'development';
-const sourcemapsMode = buildMode !== 'production' ? 'eval-source-map' : undefined;
-const dist = buildMode === 'production' ? `${__dirname}/.build/prod/` : `${__dirname}/.build/`;
+const extractCSS = new ExtractTextPlugin('app.css');
+const copyPlugin = new CopyWebpackPlugin([
+	{from: 'public/img', to: 'img'},
+	// {from: 'public/favicon.png', to: 'favicon.png'}
+]);
+const cleanCordovaPlugin = new CleanWebpackPlugin(['cordova/www/*'], {
+	// verbose: true,
+	dry: false
+});
 
-//
-// Configuration:
-// This configuration is still relatively minimalistic;
-// each section has many more options
-//
 module.exports = {
-	// List all the JS modules to create
-	// They will all be linked in the HTML page
 	entry: {
 		app: './build.hxml'
 	},
-	// Generation options (destination, naming pattern,...)
 	output: {
 		path: dist,
-		publicPath: '/',
 		filename: '[name].js'
-		// filename: '[name].[chunkhash:7].js'
+		// publicPath: '/',
 	},
-	// Module resolution options (alias, default paths,...)
 	resolve: {
 		modules: [path.resolve(__dirname, 'res/scss'), 'node_modules'],
 		extensions: ['.js']
-		// extensions: ['.js', '.json']
 	},
-	// Sourcemaps option for development
 	devtool: sourcemapsMode,
-	// Live development server (serves from memory)
 	devServer: {
 		contentBase: dist,
 		compress: true,
@@ -54,22 +48,17 @@ module.exports = {
 		overlay: true,
 		historyApiFallback: true,
 	},
-	// List all the processors
 	module: {
 		rules: [
-			// Haxe loader (through HXML files for now)
 			{
 				test: /\.hxml$/,
 				loader: 'haxe-loader',
 				options: {
-					// Additional compiler options added to all builds
-					extra: `-D build_mode=${buildMode}` + (buildMode !== 'production' ? ' -debug' : '')
+					extra: `-D build_mode=${buildMode}`
+						+ (!isProd ? ' -debug' : '')
+						+ (isCordova ? ' -D cordova' : '')
 				}
 			},
-			// Static assets loader
-			// - you will need to adjust for webfonts
-			// - you may use 'url-loader' instead which can replace
-			//   small assets with data-urls
 			{
 				test: /\.(gif|png|jpg|svg)$/,
 				loader: 'file-loader',
@@ -77,12 +66,24 @@ module.exports = {
 					name: '[name].[hash:7].[ext]'
 				}
 			},
-			// CSS processor/loader
-			// - this is where you can add sass/less processing,
-			// - also consider adding postcss-loader for autoprefixing
-			{
+			isProd
+			? {
 				test: /\.scss$/,
-				// loader: 'style-loader!css-loader!sass-loader'
+				loader: extractCSS.extract({
+					fallback: "style-loader",
+					use: [
+						{loader: 'css-loader'},
+						{
+							loader: 'sass-loader',
+							options: {
+								includePaths: [path.resolve(__dirname, 'res/scss'), path.resolve(__dirname, 'src')]
+							}
+						}
+					]
+				})
+			}
+			: {
+				test: /\.scss$/,
 				use: [
 					{loader: 'style-loader'},
 					{loader: 'css-loader'},
@@ -96,20 +97,11 @@ module.exports = {
 			}
 		]
 	},
-	// Plugins can hook to the compiler lifecycle and handle extra tasks
 	plugins: [
-		// Like generating the HTML page with links the generated JS files
 		new HtmlWebpackPlugin({
 			template: '!!pug-loader!res/index.pug'
 		}),
-		// You may want to also:
-		// - minify/uglify the output using UglifyJSPlugin,
-		// - extract the small CSS chunks into a single file using ExtractTextPlugin
-		// - inspect your JS output weight using BundleAnalyzerPlugin
-
-		new CopyWebpackPlugin([
-			{from: 'public/img', to: 'img'},
-			// {from: 'public/favicon.png', to: 'favicon.png'}
-		])
-	],
+	]
+	.concat(isCordova ? [cleanCordovaPlugin] : [copyPlugin])
+	.concat(isProd ? [extractCSS] : []),
 };

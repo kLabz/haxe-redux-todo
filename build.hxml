@@ -3,7 +3,6 @@
 -lib redux
 -lib reselect
 
--debug
 -D react_hot
 -D modular_nomaps
 -D webpack
