@@ -1,16 +1,16 @@
-package containers;
+package component;
 
 import react.Partial;
 import react.ReactComponent;
 import redux.Redux;
 import redux.react.ReactConnector;
-import components.TodoList;
+import component.TodoList;
 import thunk.TodoThunk;
 import selectors.TodoSelectors;
 import TodoListStore.TodoData;
 import TodoListStore.TodoFilter;
 
-class VisibleTodoList extends ReactGenericConnector<TodoListProps> {
+class VisibleTodoList extends ReactConnector<TodoList, TodoListProps> {
 	static function mapStateToProps() {
 		var getVisibleTodos = TodoSelectors.makeGetVisibleTodos();
 

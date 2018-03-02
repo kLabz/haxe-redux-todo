@@ -2,36 +2,37 @@
   "name": "haxe-redux-todo-app",
   "version": "0.0.0",
   "scripts": {
-    "clean": "shx rm -rf bin",
-    "libs": "browserify scripts/libs.js -o res/libs.js -d",
-    "serve": "livereloadx -s bin -p $npm_package_config_livereload_port",
-    "prepare": "node scripts/prepare.js",
-    "test": "haxe test.hxml && node .build/test.js",
-    "test-watch": "nodemon -w src/ -e hx -x 'haxe test.hxml && node .build/test.js'",
-    "build-watch": "nodemon -w src/ -e hx -x 'haxe build.hxml'"
+    "build": "cross-env NODE_ENV=production webpack",
+    "start": "nodemon -w webpack.config.js -x './node_modules/.bin/webpack-dev-server --host 0.0.0.0'",
+    "test": "haxe --connect 9009 test.hxml && node .build/test.js",
+    "test-watch": "nodemon -w src/ -e hx -x 'haxe --connect 9009 test.hxml && node .build/test.js'",
+    "build-watch": "nodemon -w src/ -e hx -x 'haxe --connect 9009 build.hxml'"
   },
   "dependencies": {
-    "prop-types": "^15.6.0",
+    "prop-types": "^15.6.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-redux": "^5.0.6",
+    "react-redux": "^5.0.7",
     "redux": "^3.7.2",
     "reselect": "^3.0.1"
   },
   "devDependencies": {
-    "browserify": "^13.3.0",
+    "copy-webpack-plugin": "^4.3.1",
+    "cross-env": "^5.1.1",
+    "css-loader": "^0.28.4",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "haxe-modular": "^0.1.7",
+    "file-loader": "^0.11.2",
+    "haxe-loader": "^0.7.3",
+    "html-webpack-plugin": "^2.29.0",
     "jsdom": "^11.6.2",
-    "livereloadx": "^0.3.10",
-    "nodemon": "^1.15.1",
-    "shelljs": "^0.7.8",
-    "shx": "^0.2.0"
-  },
-  "config": {
-    "livereload:port": "35927",
-    "www-dir": "bin",
-    "resources-dir": "res"
+    "node-sass": "^4.7.2",
+    "nodemon": "^1.13.3",
+    "pug": "^2.0.0-rc.4",
+    "pug-loader": "^2.3.0",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.18.2",
+    "webpack": "^3.0.0",
+    "webpack-dev-server": "^2.10.0"
   }
 }

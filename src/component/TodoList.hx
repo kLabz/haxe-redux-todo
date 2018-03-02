@@ -1,4 +1,4 @@
-package components;
+package component;
 
 import react.ReactMacro.jsx;
 import TodoListStore.TodoData;
@@ -9,12 +9,10 @@ typedef TodoListProps = {
 }
 
 @:jsxStatic('render')
-class TodoList
-{
-	static public function render(props:TodoListProps)
-	{
+class TodoList {
+	static public function render(props:TodoListProps) {
 		var todos = props.todos.map(function(todo) return jsx('
-			<$Todo
+			<Todo
 				key=${todo.id}
 				{...todo}
 				onClick=${props.onTodoClick.bind(todo.id)}

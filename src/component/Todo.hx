@@ -1,4 +1,4 @@
-package components;
+package component;
 
 import react.ReactMacro.jsx;
 
@@ -9,16 +9,14 @@ typedef TodoProps = {
 }
 
 @:jsxStatic('render')
-class Todo
-{
-	static public function render(props:TodoProps)
-	{
-		var style = {
-			textDecoration: props.completed ? 'line-through' : 'none'
-		};
+class Todo {
+	static var STYLES = Webpack.require('./Todo.scss');
+
+	static public function render(props:TodoProps) {
+		var className = props.completed ? 'done' : null;
 
 		return jsx('
-			<li onClick=${props.onClick} style=$style>${props.text}</li>
+			<li onClick=${props.onClick} className=$className>${props.text}</li>
 		');
 	}
 }

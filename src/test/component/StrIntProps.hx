@@ -2,5 +2,6 @@ package test.component;
 
 typedef StrIntProps = {
 	str:String,
-	int:Int
+	int:Int,
+	?initialProp:Dynamic
 };

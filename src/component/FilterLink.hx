@@ -1,9 +1,9 @@
-package containers;
+package component;
 
 import react.Partial;
 import redux.Redux;
 import redux.react.ReactConnector;
-import components.Link;
+import component.Link;
 import thunk.TodoThunk;
 import TodoListStore.TodoFilter;
 
@@ -12,18 +12,15 @@ typedef FilterLinkProps = {
 	var label:String;
 }
 
-class FilterLink extends ReactConnectorOfProps<Link, LinkProps, FilterLinkProps>
-{
-	static function mapStateToProps(state:ApplicationState, ownProps:FilterLinkProps):Partial<LinkProps>
-	{
+class FilterLink extends ReactConnectorOfProps<Link, LinkProps, FilterLinkProps> {
+	static function mapStateToProps(state:ApplicationState, ownProps:FilterLinkProps):Partial<LinkProps> {
 		return {
 			active: ownProps.filter == state.todoList.visibilityFilter,
 			label: ownProps.label
 		}
 	}
 
-	static function mapDispatchToProps(dispatch:Dispatch, ownProps:FilterLinkProps):Partial<LinkProps>
-	{
+	static function mapDispatchToProps(dispatch:Dispatch, ownProps:FilterLinkProps):Partial<LinkProps> {
 		return {
 			onClick: function() return dispatch(TodoThunk.filter(ownProps.filter))
 		};

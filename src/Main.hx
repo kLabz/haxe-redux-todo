@@ -5,47 +5,33 @@ import react.ReactDOM;
 import react.ReactMacro.jsx;
 import redux.Store;
 import redux.react.Provider;
-import components.Footer;
-import components.TodoList;
-import containers.AddTodo;
-import containers.VisibleTodoList;
+import component.Footer;
+import component.AddTodo;
+import component.VisibleTodoList;
 
-class Main
-{
-	static var store:Store<ApplicationState>;
+class Main {
+	static var STYLES = Webpack.require('App.scss');
 
-	public static function main()
-	{
-		store = ApplicationStore.create();
-		render();
-	}
+	public static function main() {
+		var store = ApplicationStore.create();
 
-	static function render()
-	{
-		/*
-		Note:
-
-		We could instead use:
-		```
-			<$AddTodo />
-			<$VisibleTodoList />
-			<$Footer />
-		```
-		But using `<$TodoList />` as `children` shows another ReactConnector feature.
-		*/
-
+		var wrapper = Browser.document.createDivElement();
+		wrapper.setAttribute("id", "body");
+		Browser.document.body.appendChild(wrapper);
 
 		var app = ReactDOM.render(jsx('
-			<$Provider store=$store>
-				<div>
-					<$AddTodo />
-					<$VisibleTodoList>
-						<$TodoList />
-					</$VisibleTodoList>
-					<$Footer />
-				</div>
-			</$Provider>
-		'), Browser.document.getElementById('app'));
+			<Provider store=$store>
+				<>
+					<VisibleTodoList />
+					<Footer />
+					<AddTodo />
+				</>
+			</Provider>
+		'), wrapper);
+
+		#if (debug && react_hot)
+		ReactHMR.autoRefresh(app);
+		#end
 	}
 }
 

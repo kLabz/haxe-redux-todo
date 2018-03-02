@@ -19,15 +19,13 @@ typedef TodoData = {
 	var SHOW_ACTIVE = "SHOW_ACTIVE";
 }
 
-enum TodoAction
-{
+enum TodoAction {
 	Add(text:String);
 	Toggle(id:Int);
 	SetVisibilityFilter(filter:TodoFilter);
 }
 
-class TodoListStore implements IReducer<TodoAction, TodoListState>
-{
+class TodoListStore implements IReducer<TodoAction, TodoListState> {
 	public var store:StoreMethods<ApplicationState>;
 	public var initState:TodoListState = {
 		visibilityFilter: SHOW_ALL,
@@ -38,10 +36,8 @@ class TodoListStore implements IReducer<TodoAction, TodoListState>
 
 	public function new() {}
 
-	public function reduce(state:TodoListState, action:TodoAction):TodoListState
-	{
-		return switch(action)
-		{
+	public function reduce(state:TodoListState, action:TodoAction):TodoListState {
+		return switch(action) {
 			case Add(text):
 				var newEntry = {id: ++ID, text: text, completed: false};
 				copy(state, {

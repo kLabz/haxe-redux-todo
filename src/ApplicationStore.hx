@@ -5,10 +5,8 @@ import redux.thunk.Thunk;
 import redux.thunk.ThunkMiddleware;
 import TodoListStore;
 
-class ApplicationStore
-{
-	static public function create():Store<ApplicationState>
-	{
+class ApplicationStore {
+	static public function create():Store<ApplicationState> {
 		// store model, implementing reducer and middleware logic
 		var todoList = new TodoListStore();
 

@@ -1,10 +1,14 @@
--lib modular
+-lib haxe-loader
 -lib react
 -lib redux
 -lib reselect
 
+-debug
+-D react_hot
+-D modular_nomaps
+-D webpack
+
 -cp src
 -main Main
--debug
 
--js bin/index.js
+-js .build/index.js

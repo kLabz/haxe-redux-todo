@@ -1,19 +1,22 @@
-package components;
+package component;
 
 import react.ReactMacro.jsx;
-import containers.FilterLink;
 
 @:jsxStatic('render')
-class Footer
-{
-	public static function render()
-	{
+class Footer {
+	static var STYLES = Webpack.require('./Footer.scss');
+
+	public static function render() {
+		var sep = " ⋅ ";
+
 		return jsx('
-			<p>
-				Show: <$FilterLink filter="SHOW_ALL" label="All" />
-				, <$FilterLink filter="SHOW_ACTIVE" label="Active" />
-				, <$FilterLink filter="SHOW_COMPLETED" label="Completed" />
-			</p>
+			<footer>
+				<FilterLink filter="SHOW_ALL" label="All" />
+				$sep
+				<FilterLink filter="SHOW_ACTIVE" label="Todo" />
+				$sep
+				<FilterLink filter="SHOW_COMPLETED" label="Done" />
+			</footer>
 		');
 	}
 }

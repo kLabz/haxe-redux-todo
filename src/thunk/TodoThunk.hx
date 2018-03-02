@@ -8,17 +8,16 @@ import TodoListStore.TodoFilter;
 
 class TodoThunk {
 	public static function add(todo:String) {
-		return Thunk.Action(function(dispatch, getState) {
-			return dispatch(TodoAction.Add(todo));
-		});
-	}
+		todo = StringTools.trim(todo);
 
-	public static function addIf(todo:String) {
+		// Early exit if invalid
+		if (todo.length == 0) return null;
+
 		return Thunk.Action(function(dispatch:Dispatch, getState:Void->ApplicationState) {
 			var todos = getState().todoList.todos;
 
-			if (Lambda.exists(todos, function(t) return t.text == todo))
-				return null;
+			// Late exit if already exists
+			if (Lambda.exists(todos, function(t) return t.text == todo)) return null;
 
 			return dispatch(TodoAction.Add(todo));
 		});

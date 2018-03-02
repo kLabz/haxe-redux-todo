@@ -1,4 +1,4 @@
-package containers;
+package component;
 
 import js.html.InputElement;
 import react.ReactComponent;
@@ -11,10 +11,8 @@ using StringTools;
 
 // The connected component will be accessible via `AddTodo.AddTodo` instead of `AddTodo.Connected`
 @:jsxStatic('AddTodo')
-class AddTodo extends ReactConnector<AddTodoComponent, AddTodoComponentProps>
-{
-	static function mapDispatchToProps(dispatch:Dispatch):AddTodoComponentProps
-	{
+class AddTodo extends ReactConnector<AddTodoComponent, AddTodoComponentProps> {
+	static function mapDispatchToProps(dispatch:Dispatch):AddTodoComponentProps {
 		return {
 			addTodo: function(todo:String) return dispatch(TodoThunk.add(todo))
 		};
@@ -25,29 +23,24 @@ typedef AddTodoComponentProps = {
 	var addTodo:String -> Void;
 }
 
-class AddTodoComponent extends ReactComponentOfProps<AddTodoComponentProps>
-{
+class AddTodoComponent extends ReactComponentOfProps<AddTodoComponentProps> {
+	static var STYLES = Webpack.require('./AddTodo.scss');
 	var input:InputElement;
 
-	override public function render()
-	{
+	override public function render() {
 		return jsx('
-			<div>
-				<form onSubmit=$onSubmit>
-					<input ref=$onInputRef />
-					<button type="submit">Add Todo</button>
-				</form>
-			</div>
+			<form onSubmit=$onSubmit>
+				<input ref=$onInputRef autoFocus />
+				<button type="submit">+</button>
+			</form>
 		');
 	}
 
-	function onInputRef(node:InputElement)
-	{
+	function onInputRef(node:InputElement) {
 		input = node;
 	}
 
-	function onSubmit(e)
-	{
+	function onSubmit(e) {
 		e.preventDefault();
 		if (input.value.trim() == "") return;
 

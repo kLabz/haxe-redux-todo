@@ -1,4 +1,4 @@
-package components;
+package component;
 
 import js.html.MouseEvent;
 import react.ReactComponent.ReactComponentOfProps;
@@ -10,10 +10,8 @@ typedef LinkProps = {
 	var label:String;
 }
 
-class Link extends ReactComponentOfProps<LinkProps>
-{
-	override public function render()
-	{
+class Link extends ReactComponentOfProps<LinkProps> {
+	override public function render() {
 		if (props.active)
 			return jsx('<span>${props.label}</span>');
 
@@ -24,8 +22,7 @@ class Link extends ReactComponentOfProps<LinkProps>
 		');
 	}
 
-	function onClick(e:MouseEvent)
-	{
+	function onClick(e:MouseEvent) {
 		e.preventDefault();
 		props.onClick();
 	}
