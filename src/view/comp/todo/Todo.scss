@@ -1,14 +1,5 @@
 @import 'variables';
 
-ul {
-	width: 100%;
-	height: 100%;
-	margin: 0;
-	margin-bottom: $footer-size;
-	padding-left: 0;
-	overflow: auto;
-}
-
 li {
 	position: relative;
 	margin: .5rem;

@@ -5,9 +5,10 @@ import react.ReactDOM;
 import react.ReactMacro.jsx;
 import redux.Store;
 import redux.react.Provider;
-import component.Footer;
-import component.AddTodo;
-import component.VisibleTodoList;
+import store.AppStore;
+import view.comp.footer.Footer;
+import view.comp.addTodo.AddTodo;
+import view.comp.todoList.TodoList;
 
 class Main {
 	static var STYLES = Webpack.require('App.scss');
@@ -23,7 +24,7 @@ class Main {
 	}
 
 	static function render() {
-		var store = ApplicationStore.create();
+		var store = AppStore.create();
 
 		var wrapper = Browser.document.createDivElement();
 		wrapper.setAttribute("id", "body");
@@ -38,7 +39,7 @@ class Main {
 		var app = ReactDOM.render(jsx('
 			<Provider store=$store>
 				<>
-					<VisibleTodoList />
+					<TodoList />
 					<Footer />
 					<AddTodo />
 				</>
@@ -51,27 +52,3 @@ class Main {
 	}
 }
 
-/*
-JS version:
-http://redux.js.org/docs/basics/UsageWithReact.html#componentsappjs
-http://redux.js.org/docs/basics/UsageWithReact.html#indexjs
-
-```
-const App = () => (
-	<div>
-		<AddTodo />
-		<VisibleTodoList />
-		<Footer />
-	</div>
-)
-
-let store = createStore(todoApp)
-
-render(
-	<Provider store={store}>
-		<App />
-	</Provider>,
-	document.getElementById('root')
-)
-```
-*/

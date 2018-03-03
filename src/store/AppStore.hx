@@ -1,12 +1,14 @@
+package store;
+
 import redux.Redux;
 import redux.Store;
 import redux.StoreBuilder.*;
 import redux.thunk.Thunk;
 import redux.thunk.ThunkMiddleware;
-import TodoListStore;
+import store.TodoListStore;
 
-class ApplicationStore {
-	static public function create():Store<ApplicationState> {
+class AppStore {
+	static public function create():Store<AppState> {
 		// store model, implementing reducer and middleware logic
 		var todoList = new TodoListStore();
 

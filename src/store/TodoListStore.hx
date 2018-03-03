@@ -1,3 +1,5 @@
+package store;
+
 import react.ReactUtil.copy;
 import redux.IReducer;
 import redux.StoreMethods;
@@ -26,7 +28,7 @@ enum TodoAction {
 }
 
 class TodoListStore implements IReducer<TodoAction, TodoListState> {
-	public var store:StoreMethods<ApplicationState>;
+	public var store:StoreMethods<AppState>;
 	public var initState:TodoListState = {
 		visibilityFilter: SHOW_ALL,
 		todos: []

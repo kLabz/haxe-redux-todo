@@ -7,7 +7,7 @@ import jsdom.Jsdom;
 import test.suite.*;
 
 class Tests implements Buddy<[
-	ReactConnectorTests
+	// TODO: auto include tests from components, thunks, selectors, reducers, middlewares
 ]> {
 	static function __init__() {
 		JsdomSetup.init();

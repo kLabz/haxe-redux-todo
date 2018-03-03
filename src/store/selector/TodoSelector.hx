@@ -1,14 +1,14 @@
-package selectors;
+package store.selector;
 
 import reselect.Reselect.createSelector;
-import TodoListStore.TodoData;
-import TodoListStore.TodoFilter;
+import store.TodoListStore.TodoData;
+import store.TodoListStore.TodoFilter;
 
-class TodoSelectors {
-	public static function getVisibilityFilter(state:ApplicationState):TodoFilter
+class TodoSelector {
+	public static function getVisibilityFilter(state:AppState):TodoFilter
 		return state.todoList.visibilityFilter;
 
-	public static function getTodos(state:ApplicationState)
+	public static function getTodos(state:AppState)
 		return state.todoList.todos;
 
 	public static function makeGetVisibleTodos() {

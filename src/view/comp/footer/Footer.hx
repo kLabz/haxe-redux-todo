@@ -1,6 +1,7 @@
-package component;
+package view.comp.footer;
 
 import react.ReactMacro.jsx;
+import view.comp.filterLink.FilterLink;
 
 @:jsxStatic('render')
 class Footer {
@@ -21,27 +22,3 @@ class Footer {
 	}
 }
 
-/*
-JS version:
-http://redux.js.org/docs/basics/UsageWithReact.html#componentsfooterjs
-
-```
-const Footer = () => (
-	<p>
-		Show:
-		{" "}
-		<FilterLink filter="SHOW_ALL">
-			All
-		</FilterLink>
-		{", "}
-		<FilterLink filter="SHOW_ACTIVE">
-			Active
-		</FilterLink>
-		{", "}
-		<FilterLink filter="SHOW_COMPLETED">
-			Completed
-		</FilterLink>
-	</p>
-)
-```
-*/

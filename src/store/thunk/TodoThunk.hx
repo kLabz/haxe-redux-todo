@@ -1,10 +1,11 @@
-package thunk;
+package store.thunk;
 
 import redux.Redux.Action;
 import redux.Redux.Dispatch;
 import redux.thunk.Thunk;
-import TodoListStore.TodoAction;
-import TodoListStore.TodoFilter;
+import store.AppState;
+import store.TodoListStore.TodoAction;
+import store.TodoListStore.TodoFilter;
 
 class TodoThunk {
 	public static function add(todo:String) {
@@ -13,7 +14,7 @@ class TodoThunk {
 		// Early exit if invalid
 		if (todo.length == 0) return null;
 
-		return Thunk.Action(function(dispatch:Dispatch, getState:Void->ApplicationState) {
+		return Thunk.Action(function(dispatch:Dispatch, getState:Void->AppState) {
 			var todos = getState().todoList.todos;
 
 			// Late exit if already exists
