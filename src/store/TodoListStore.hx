@@ -37,20 +37,24 @@ class TodoListStore implements IReducer<TodoAction, TodoListState> {
 				});
 
 			case Toggle(id):
-				copy(state, {
-					todos: [
-						for (todo in state.todos)
-							if (todo.id != id) todo;
-							else {
-								id: todo.id,
-								text: todo.text,
-								completed: !todo.completed
-							}
-					]
-				});
+				var foundId = false;
+				var newTodos = [
+					for (todo in state.todos) {
+						if (todo.id != id) {
+							todo;
+						} else {
+							foundId = true;
+							{id: todo.id, text: todo.text, completed: !todo.completed};
+						}
+					}
+				];
+
+				if (!foundId) state
+				else copy(state, {todos: newTodos});
 
 			case SetVisibilityFilter(filter):
-				copy(state, {visibilityFilter: filter});
+				if (filter == state.visibilityFilter) state
+				else copy(state, {visibilityFilter: filter});
 		}
 	}
 }
