@@ -35,12 +35,5 @@ class TodoThunk {
 			return dispatch(TodoAction.SetVisibilityFilter(filter));
 		});
 	}
-
-	public static function dummy() {
-		return Thunk.WithParams(function(dispatch, getState, params) {
-			trace(params); // {custom: "data"}
-			return null;
-		});
-	}
 }
 
