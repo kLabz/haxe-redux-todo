@@ -5,8 +5,8 @@ import react.Partial;
 import react.ReactMacro.jsx;
 import redux.Redux;
 import react.ReactComponent;
+import dto.TodoFilter;
 import store.AppState;
-import store.TodoListStore.TodoFilter;
 import store.thunk.TodoThunk;
 
 typedef FilterLinkProps = {

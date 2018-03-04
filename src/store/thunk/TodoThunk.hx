@@ -3,9 +3,9 @@ package store.thunk;
 import redux.Redux.Action;
 import redux.Redux.Dispatch;
 import redux.thunk.Thunk;
+import dto.TodoFilter;
 import store.AppState;
 import store.TodoListStore.TodoAction;
-import store.TodoListStore.TodoFilter;
 
 class TodoThunk {
 	public static function add(todo:String) {

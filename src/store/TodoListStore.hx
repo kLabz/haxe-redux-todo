@@ -3,22 +3,12 @@ package store;
 import react.ReactUtil.copy;
 import redux.IReducer;
 import redux.StoreMethods;
+import dto.TodoData;
+import dto.TodoFilter;
 
 typedef TodoListState = {
 	var visibilityFilter:TodoFilter;
 	var todos:Array<TodoData>;
-}
-
-typedef TodoData = {
-	var id:Int;
-	var completed:Bool;
-	var text:String;
-}
-
-@:enum abstract TodoFilter(String) from String to String {
-	var SHOW_ALL = "SHOW_ALL";
-	var SHOW_COMPLETED = "SHOW_COMPLETED";
-	var SHOW_ACTIVE = "SHOW_ACTIVE";
 }
 
 enum TodoAction {

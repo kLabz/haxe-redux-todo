@@ -1,8 +1,8 @@
 package store.selector;
 
 import reselect.Reselect.createSelector;
-import store.TodoListStore.TodoData;
-import store.TodoListStore.TodoFilter;
+import dto.TodoData;
+import dto.TodoFilter;
 
 class TodoSelector {
 	public static function getVisibilityFilter(state:AppState):TodoFilter
