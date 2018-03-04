@@ -1,6 +1,7 @@
 package;
 
 import js.Browser;
+import eventtypes.CordovaEventType;
 import react.ReactDOM;
 import react.ReactMacro.jsx;
 import redux.Store;
@@ -15,7 +16,7 @@ class Main {
 
 	public static function main() {
 		#if (build_mode == production)
-		Browser.document.addEventListener('deviceready', function(?_) {
+		Browser.document.addEventListener(CordovaEventType.DeviceReady, function(?_) {
 			render();
 		}, false);
 		#else

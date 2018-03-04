@@ -8,6 +8,7 @@
 -lib react
 -lib redux
 -lib reselect
+-lib event-types
 
 -D nodejs
 -D buddy-colors

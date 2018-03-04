@@ -2,6 +2,7 @@
 -lib react
 -lib redux
 -lib reselect
+-lib event-types
 
 -D react_hot
 -D modular_nomaps
@@ -11,3 +12,4 @@
 -main Main
 
 -js .build/index.js
+
