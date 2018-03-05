@@ -3,13 +3,15 @@
   "version": "0.0.0",
   "scripts": {
     "build": "cross-env NODE_ENV=development webpack",
+    "build:watch": "nodemon -w src/ -e hx -x 'haxe --connect 9009 build.hxml'",
     "build:prod": "cross-env NODE_ENV=production webpack",
     "build:cordova:android": "cross-env NODE_ENV=development TARGET=cordova_android webpack && cd cordova && cordova run android",
     "build:cordova:android:prod": "cross-env NODE_ENV=production TARGET=cordova_android webpack && cd cordova && cordova run android",
     "start": "nodemon -w webpack.config.js -x './node_modules/.bin/webpack-dev-server --host 0.0.0.0'",
-    "test": "haxe test.hxml && node .build/test.js",
-    "test-watch": "nodemon -w src/ -e hx -x 'haxe test.hxml && node .build/test.js'",
-    "build-watch": "nodemon -w src/ -e hx -x 'haxe --connect 9009 build.hxml'"
+    "test": "cross-env MAIN=test.Tests npm run test:file",
+    "test:watch": "cross-env MAIN=test.Tests npm run test:file:watch",
+    "test:file": "haxe test.hxml -main $MAIN && node .build/test.js",
+    "test:file:watch": "nodemon -w src/ -e hx -x 'haxe test.hxml -main $MAIN && node .build/test.js'"
   },
   "dependencies": {
     "prop-types": "^15.6.1",

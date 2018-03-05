@@ -1,5 +1,4 @@
 -js .build/test.js
--main test.Tests
 
 -cp src
 
