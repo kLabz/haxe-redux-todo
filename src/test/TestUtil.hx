@@ -12,7 +12,7 @@ class TestUtil {
 		?params:T
 	):Array<Action> {
 		var actions = [];
-		var dispatch = function(action:Action) { actions.push(action); return null; };
+		var dispatch = actions.push;
 		var getState = function() return state;
 
 		switch (thunk) {

@@ -8,13 +8,15 @@ import store.thunk.TodoThunk;
 
 using StringTools;
 
-private typedef Props = {
+typedef Props = {
 	var addTodo:String -> Void;
 }
 
 @:connect
 class AddTodo extends ReactComponentOfProps<Props> {
+	#if webpack
 	static var STYLES = Webpack.require('./AddTodo.scss');
+	#end
 
 	static function mapDispatchToProps(dispatch:Dispatch) {
 		return {

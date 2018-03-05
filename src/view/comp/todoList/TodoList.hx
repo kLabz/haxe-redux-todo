@@ -9,14 +9,16 @@ import store.selector.TodoSelector;
 import store.thunk.TodoThunk;
 import view.comp.todo.Todo;
 
-private typedef Props = {
+typedef Props = {
 	var todos:Array<TodoData>;
 	var onTodoClick:Int -> Void;
 }
 
 @:connect
 class TodoList extends ReactComponentOfProps<Props> {
+	#if webpack
 	static var STYLES = Webpack.require('./TodoList.scss');
+	#end
 
 	static function mapStateToProps() {
 		var getVisibleTodos = TodoSelector.makeGetVisibleTodos();

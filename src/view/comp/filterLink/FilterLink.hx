@@ -14,18 +14,17 @@ typedef FilterLinkProps = {
 	var label:String;
 }
 
-private typedef Props = {
+typedef Props = {
+	> FilterLinkProps,
 	var onClick:Void -> Void;
 	var active:Bool;
-	var label:String;
 }
 
 @:connect
 class FilterLink extends ReactComponentOfProps<Props> {
 	static function mapStateToProps(state:AppState, ownProps:FilterLinkProps) {
 		return {
-			active: ownProps.filter == state.todoList.visibilityFilter,
-			label: ownProps.label
+			active: ownProps.filter == state.todoList.visibilityFilter
 		}
 	}
 

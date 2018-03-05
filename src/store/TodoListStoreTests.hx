@@ -14,26 +14,26 @@ class TodoListStoreTests extends SingleSuite {
 			it("should handle Add(text)", {
 				var prevID = store.ID;
 
-				var state = store.reduce(store.initState, Add('todo 1'));
+				var state = store.reduce(store.initState, Add("todo 1"));
 				state.todos.length.should.be(1);
 
 				var todo = state.todos[0];
 				todo.id.should.be(prevID + 1);
-				todo.text.should.be('todo 1');
+				todo.text.should.be("todo 1");
 				todo.completed.should.be(false);
 
-				state = store.reduce(state, Add('todo 2'));
+				state = store.reduce(state, Add("todo 2"));
 				state.todos.length.should.be(2);
 
 				// Should keep existing items
 				todo = state.todos[0];
 				todo.id.should.be(prevID + 1);
-				todo.text.should.be('todo 1');
+				todo.text.should.be("todo 1");
 				todo.completed.should.be(false);
 
 				todo = state.todos[1];
 				todo.id.should.be(prevID + 2);
-				todo.text.should.be('todo 2');
+				todo.text.should.be("todo 2");
 				todo.completed.should.be(false);
 
 				// Should not alter visibility filter
