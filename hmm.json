@@ -1,25 +1,49 @@
 {
   "dependencies": [
     {
-      "name": "modular",
+      "name": "haxe-loader",
       "type": "haxelib",
-      "version": "0.2.0"
+      "version": "0.7.3"
+    },
+    {
+      "name": "react",
+      "type": "git",
+      "url": "git@github.com:back2dos/haxe-react.git"
+    },
+    {
+      "name": "redux",
+      "type": "haxelib",
+      "version": "0.5.1"
+    },
+    {
+      "name": "redux-thunk",
+      "type": "haxelib",
+      "version": "0.0.1"
+    },
+    {
+      "name": "redux-connect",
+      "type": "haxelib",
+      "version": "0.0.1"
+    },
+    {
+      "name": "reselect",
+      "type": "haxelib",
+      "version": "0.0.3"
+    },
+    {
+      "name": "event-types",
+      "type": "haxelib",
+      "version": "0.2.1"
+    },
+    {
+      "name": "buddy",
+      "type": "haxelib",
+      "version": "2.8.2"
     },
     {
       "name": "enzyme",
       "type": "haxelib",
       "version": "0.5.1"
-    },
-    {
-      "name": "react",
-      "url": "git@github.com:kLabz/haxe-react.git",
-      "ref": "3150f53c0dfc2d5d1b4640f9f6a85cd6b9fa9aca"
-    },
-    {
-      "name": "redux",
-      "type": "git",
-      "url": "git@github.com:kLabz/haxe-redux.git",
-      "ref": "20f5227fabd786fe84e99c63044da959b2f04e87"
     }
   ]
 }

@@ -9,6 +9,10 @@
 -lib reselect
 -lib event-types
 
+# Additional react/redux features
+-lib redux-thunk
+-lib redux-connect
+
 -D nodejs
 -D buddy-colors
 
