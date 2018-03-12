@@ -1,4 +1,4 @@
-package store;
+package store.reducer;
 
 import react.ReactUtil.copy;
 import redux.IReducer;

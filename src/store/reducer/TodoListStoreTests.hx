@@ -1,11 +1,11 @@
-package store;
+package store.reducer;
 
 import buddy.SingleSuite;
 import dto.TodoFilter;
 
 using buddy.Should;
 
-@:access(store.TodoListStore)
+@:access(store.reducer.TodoListStore)
 class TodoListStoreTests extends SingleSuite {
 	public function new() {
 		describe("TodoList reducer", {

@@ -1,6 +1,6 @@
 package store;
 
-import store.TodoListStore.TodoListState;
+import store.reducer.TodoListStore.TodoListState;
 
 typedef AppState = {
 	var todoList:TodoListState;

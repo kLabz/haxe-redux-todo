@@ -2,7 +2,7 @@ package store.thunk;
 
 import buddy.SingleSuite;
 import dto.TodoFilter;
-import store.TodoListStore.TodoAction;
+import store.reducer.TodoListStore.TodoAction;
 import test.TestUtil.computeThunkActions;
 
 using buddy.Should;

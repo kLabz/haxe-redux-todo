@@ -8,7 +8,7 @@ import eventtypes.FormEventType;
 import react.ReactMacro.jsx;
 import dto.TodoFilter;
 import store.AppState;
-import store.TodoListStore.TodoAction;
+import store.reducer.TodoListStore.TodoAction;
 import test.TestUtil;
 
 using buddy.Should;

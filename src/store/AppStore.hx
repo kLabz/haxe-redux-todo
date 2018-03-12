@@ -5,7 +5,7 @@ import redux.Store;
 import redux.StoreBuilder.*;
 import redux.thunk.Thunk;
 import redux.thunk.ThunkMiddleware;
-import store.TodoListStore;
+import store.reducer.TodoListStore;
 
 class AppStore {
 	static public function create():Store<AppState> {

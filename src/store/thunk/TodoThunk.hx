@@ -5,7 +5,7 @@ import redux.Redux.Dispatch;
 import redux.thunk.Thunk;
 import dto.TodoFilter;
 import store.AppState;
-import store.TodoListStore.TodoAction;
+import store.reducer.TodoListStore.TodoAction;
 
 class TodoThunk {
 	public static function add(todo:String) {
