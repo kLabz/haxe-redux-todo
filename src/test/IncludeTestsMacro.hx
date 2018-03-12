@@ -7,15 +7,41 @@ import sys.FileSystem as FS;
 using StringTools;
 using haxe.macro.Tools;
 
+typedef CoverageData = {
+	total:Int,
+	untested:Array<String>
+}
+
+typedef SuitesData = {
+	suites:Array<String>,
+	reducer:CoverageData,
+	middleware:CoverageData,
+	thunk:CoverageData,
+	selector:CoverageData
+}
+
 class IncludeTestsMacro {
+	static var hxExt = ~/(\.hx$)/;
+
 	// Will include all tests suites whose name ends with "Tests"
 	public static function buildTests() {
 		var path = extractPath();
 		if (path == null) Context.error('could not find the sources directory', Context.currentPos());
 
 		var suites = [];
-		var suiteFiles = extractTestSuites(path);
-		for (s in suiteFiles) suites.push(extractExpr(path, s));
+		var suitesData = extractTestSuites(path, path, {
+			suites: [],
+			reducer: {total: 0, untested: []},
+			middleware: {total: 0, untested: []},
+			thunk: {total: 0, untested: []},
+			selector: {total: 0, untested: []}
+		});
+
+		for (s in suitesData.suites) suites.push(extractExpr(path, s));
+
+		#if tests_coverage
+		addCoverage(suites, suitesData);
+		#end
 
 		Context.defineType({
 			name: 'TestSuites',
@@ -81,22 +107,78 @@ class IncludeTestsMacro {
 		return macro null;
 	}
 
-	static function extractTestSuites(dir:String):Array<String> {
-		var suites = [];
-
+	static function extractTestSuites(root:String, dir:String, data:SuitesData):SuitesData {
 		if (FS.isDirectory(dir)) {
 			var entries = FS.readDirectory(dir);
 
 			for (entry in entries) {
 				var path = dir + entry;
 
-				if (FS.isDirectory(path))
-					suites = suites.concat(extractTestSuites(path + '/'));
-				else if (entry.length > 8 && entry.endsWith('Tests.hx'))
-					suites.push(path);
+				if (FS.isDirectory(path)) {
+					extractTestSuites(root, path + '/', data);
+				} else {
+					if (entry.length > 8 && entry.endsWith('Tests.hx')) {
+						data.suites.push(path);
+					} else if (entry.endsWith('.hx')) {
+						var target:Null<CoverageData> = switch (dir.replace(root, '')) {
+							case 'store/reducer/': data.reducer;
+							case 'store/middleware/': data.middleware;
+							case 'store/thunk/': data.thunk;
+							case 'store/selector/': data.selector;
+							default: null;
+						};
+
+						if (target != null) {
+							target.total++;
+							if (!FS.exists(dir + hxExt.replace(entry, 'Tests.hx')))
+								target.untested.push(hxExt.replace(entry, ''));
+						}
+					}
+				}
 			}
 		}
 
-		return suites;
+		return data;
+	}
+
+	static function addCoverage(suites:Array<Expr>, suitesData:SuitesData):Void {
+		var tests = [];
+		tests.push(generateCoverage(suitesData.middleware, "middlewares"));
+		tests.push(generateCoverage(suitesData.reducer, "reducers"));
+		tests.push(generateCoverage(suitesData.selector, "selectors"));
+		tests.push(generateCoverage(suitesData.thunk, "thunks"));
+
+		Context.defineType(macro class CoverageTests extends buddy.BuddySuite {
+			public function new() {
+				describe("Tests coverage", {
+					$a{tests};
+				});
+			}
+		});
+
+		suites.push(macro CoverageTests);
+	}
+
+	static function generateCoverage(coverage:CoverageData, id:String):Expr {
+		var def = 'All ${coverage.total} ${id} should have test suites';
+
+		if (coverage.untested.length == 0) {
+			return generatePassingCase(def);
+		} else {
+			var fail = 'No test suite for: ${coverage.untested.join(", ")}';
+			return generateFailingCase(def, fail);
+		}
+	}
+
+	static function generatePassingCase(def:String):Expr {
+		return macro it($v{def}, {
+			buddy.SuitesRunner.currentTest(true, '', []);
+		});
+	}
+
+	static function generateFailingCase(def:String, message:String):Expr {
+		return macro it($v{def}, {
+			buddy.SuitesRunner.currentTest(false, $v{message}, []);
+		});
 	}
 }

@@ -15,6 +15,7 @@
 
 -D nodejs
 -D buddy-colors
+-D tests_coverage
 
 -debug
 

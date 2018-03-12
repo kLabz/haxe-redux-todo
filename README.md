@@ -70,6 +70,26 @@ TodoThunk
 13 specs, 0 failures, 0 pending
 ```
 
+### Tests coverage
+
+You can enable (basic) tests coverage with `-D tests_coverage`.
+
+This will add a new test at the end, verifying that each reducer, middleware, thunk and selector has a corresponding `*Tests.hx` file, by checking the `src/store/{middleware,reducer,selector,thunk}/` directories.
+
+This will *not* check that this is a proper test suite (this would fail at tests compile-time anyway), nor that this test suite is complete in any way.
+
+Example output:
+```
+[... see previous example output ...]
+Tests coverage
+  All 1 middlewares should have test suites (FAILED)
+    No test suite for: MyMiddleware
+  All 1 reducers should have test suites (Passed)
+  All 1 selectors should have test suites (Passed)
+  All 1 thunks should have test suites (Passed)
+17 specs, 1 failures, 0 pending
+```
+
 
 ## Architecture
 
