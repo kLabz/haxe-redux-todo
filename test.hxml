@@ -3,11 +3,12 @@
 -cp src
 
 -lib enzyme
--lib buddy
+-lib autotest
 -lib react
 -lib redux
 -lib reselect
 -lib event-types
+-lib js-object
 
 # Additional react/redux features
 -lib redux-thunk
@@ -15,7 +16,7 @@
 
 -D nodejs
 -D buddy-colors
--D tests_coverage
+-D redux_test_coverage
 
 -debug
 

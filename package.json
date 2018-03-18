@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "build": "cross-env NODE_ENV=development webpack",
-    "build:watch": "nodemon -w src/ -e hx -x 'haxe --connect 9009 build.hxml'",
+    "build:watch": "nodemon -w src/ -e hx -x 'haxe build.hxml'",
     "build:prod": "cross-env NODE_ENV=production webpack",
     "build:cordova:android": "cross-env NODE_ENV=development TARGET=cordova_android webpack && cd cordova && cordova run android",
     "build:cordova:android:prod": "cross-env NODE_ENV=production TARGET=cordova_android webpack && cd cordova && cordova run android",
