@@ -1,15 +1,15 @@
 package store.reducer;
 
-import react.ReactUtil.copy;
 import redux.IReducer;
 import redux.StoreMethods;
 import dto.TodoData;
 import dto.TodoFilter;
+import model.ExtendObject;
 
-typedef TodoListState = {
+typedef TodoListState = ExtendObject<{
 	var visibilityFilter:TodoFilter;
 	var todos:Array<TodoData>;
-}
+}>;
 
 enum TodoAction {
 	Add(text:String);
@@ -32,7 +32,7 @@ class TodoListStore implements IReducer<TodoAction, TodoListState> {
 		return switch(action) {
 			case Add(text):
 				var newEntry = {id: ++ID, text: text, completed: false};
-				copy(state, {
+				state.copy({
 					todos: state.todos.concat([newEntry])
 				});
 
@@ -50,11 +50,11 @@ class TodoListStore implements IReducer<TodoAction, TodoListState> {
 				];
 
 				if (!foundId) state
-				else copy(state, {todos: newTodos});
+				else state.copy({todos: newTodos});
 
 			case SetVisibilityFilter(filter):
 				if (filter == state.visibilityFilter) state
-				else copy(state, {visibilityFilter: filter});
+				else state.copy({visibilityFilter: filter});
 		}
 	}
 }

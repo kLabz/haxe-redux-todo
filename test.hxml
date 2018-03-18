@@ -8,6 +8,7 @@
 -lib redux
 -lib reselect
 -lib event-types
+-lib js-object
 
 # Additional react/redux features
 -lib redux-thunk
