@@ -1,4 +1,4 @@
-package test;
+package util;
 
 import redux.Redux;
 import redux.thunk.Thunk;

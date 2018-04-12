@@ -8,7 +8,7 @@ import react.ReactMacro.jsx;
 import dto.TodoFilter;
 import store.AppState;
 import store.reducer.TodoListStore.TodoAction;
-import test.TestUtil;
+import util.TestUtil;
 import view.comp.todo.Todo;
 
 using buddy.Should;

@@ -11,6 +11,11 @@
       "url": "git@github.com:back2dos/haxe-react.git"
     },
     {
+      "name": "autotest",
+      "type": "git",
+      "url": "git@github.com:kLabz/autotest.git"
+    },
+    {
       "name": "redux",
       "type": "haxelib",
       "version": "0.5.1"
