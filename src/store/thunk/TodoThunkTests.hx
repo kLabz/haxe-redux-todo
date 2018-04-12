@@ -3,11 +3,11 @@ package store.thunk;
 import buddy.SingleSuite;
 import dto.TodoFilter;
 import store.reducer.TodoListStore.TodoAction;
-import test.TestUtil.computeThunkActions;
+import util.TestUtil.computeThunkActions;
 
 using buddy.Should;
 using enzyme.EnzymeMatchers;
-using test.TestUtil;
+using util.TestUtil;
 
 class TodoThunkTests extends SingleSuite {
 	public function new() {
