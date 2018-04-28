@@ -3,7 +3,7 @@ package model;
 import js.Object;
 
 @:forward
-abstract ExtendObject<T>(T) from T to T {
+abstract ExtendObject<T:{}>(T) from T to T {
 	public inline function copy(?source:Dynamic):ExtendObject<T>
 		return Object.assign({}, this, source);
 
@@ -26,10 +26,10 @@ abstract ExtendObject<T>(T) from T to T {
 	public inline function assign(?source:Dynamic):ExtendObject<T>
 		return Object.assign(this, source);
 
-	public inline function defineProperty<TProp>(prop:String, descriptor:PropertyDescriptor<TProp>):ExtendObject<T>
+	public inline function defineProperty<TProp>(prop:String, descriptor:ObjectPropertyDescriptor<TProp>):ExtendObject<T>
 		return Object.defineProperty(this, prop, descriptor);
 
-	public inline function defineProperties(props:Dynamic<PropertyDescriptor<Any>>):ExtendObject<T>
+	public inline function defineProperties(props:Dynamic<ObjectPropertyDescriptor<Any>>):ExtendObject<T>
 		return Object.defineProperties(this, props);
 
 	public inline function entries():Array<Array<Any>>
@@ -39,4 +39,3 @@ abstract ExtendObject<T>(T) from T to T {
 		return Object.freeze(this);
 
 }
-

@@ -29,7 +29,7 @@ class AddTodo extends ReactComponentOfProps<Props> {
 	override public function render() {
 		return jsx('
 			<form onSubmit=$onSubmit>
-				<input ref=$onInputRef autoFocus />
+				<input ref=$onInputRef autoFocus="autoFocus" />
 				<button type="submit">+</button>
 			</form>
 		');
