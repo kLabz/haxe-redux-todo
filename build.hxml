@@ -8,6 +8,7 @@
 # Additional react/redux features
 -lib redux-thunk
 -lib redux-connect
+-lib react-wrap
 
 -D react_hot
 -D modular_nomaps

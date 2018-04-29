@@ -2,6 +2,7 @@ package view.comp.filterLink;
 
 import js.html.MouseEvent;
 import react.Partial;
+import react.React.CreateElementType;
 import react.ReactMacro.jsx;
 import redux.Redux;
 import react.ReactComponent;
@@ -20,9 +21,22 @@ typedef Props = {
 	var active:Bool;
 }
 
+class H2G2 {
+	public static function withAnswer(Comp:CreateElementType):CreateElementType {
+		return function(p) {
+			trace(p);
+			return jsx('
+				<$Comp {...p} answer=${42} />
+			');
+		}
+	}
+}
+
+@:wrap(H2G2.withAnswer)
 @:connect
 class FilterLink extends ReactComponentOfProps<Props> {
 	static function mapStateToProps(state:AppState, ownProps:FilterLinkProps) {
+		trace(ownProps);
 		return {
 			active: ownProps.filter == state.todoList.visibilityFilter
 		}
@@ -35,6 +49,7 @@ class FilterLink extends ReactComponentOfProps<Props> {
 	}
 
 	override public function render() {
+		trace(props);
 		if (props.active)
 			return jsx('<span>${props.label}</span>');
 
