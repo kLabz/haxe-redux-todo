@@ -9,9 +9,3 @@ res/libs.js
 res/scss/.sass-cache/
 tests/out
 npm-debug.log
-
-cordova/node_modules/
-cordova/platforms/
-cordova/plugins/
-cordova/www/
-

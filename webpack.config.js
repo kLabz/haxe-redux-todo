@@ -4,15 +4,13 @@ const buildMode = process.env.NODE_ENV || 'development';
 const buildTarget = process.env.TARGET || 'web';
 
 const isProd = buildMode === 'production';
-const isCordova = buildTarget.startsWith('cordova');
 
 const sourcemapsMode = isProd ? 'eval-source-map' : undefined;
-const dist = isCordova ? path.resolve(__dirname, 'cordova/www') : path.resolve(__dirname, '.build');
+const dist = path.resolve(__dirname, '.build');
 
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const useFriendly = true;
@@ -21,7 +19,6 @@ const haxeFormatter = require('haxe-loader/errorFormatter');
 const haxeTransformer = require('haxe-loader/errorTransformer');
 
 const extractCSS = new ExtractTextPlugin('app.css');
-const cleanCordovaPlugin = new CleanWebpackPlugin(['cordova/www/*'], {dry: false});
 
 module.exports = {
 	entry: {
@@ -55,7 +52,6 @@ module.exports = {
 					emitStdoutAsWarning: true,
 					extra: `-D build_mode=${buildMode}`
 						+ (!isProd ? ' -debug' : '')
-						+ (isCordova ? ' -D cordova' : '')
 				}
 			},
 			{
@@ -112,6 +108,5 @@ module.exports = {
 			additionalFormatters: [haxeFormatter]
 		})
 	] : [])
-	.concat(isCordova ? [cleanCordovaPlugin] : [])
 	.concat(isProd ? [extractCSS] : []),
 };

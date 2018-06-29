@@ -19,7 +19,7 @@ For haxe, this project is using [`hmm`](https://github.com/andywhite37/hmm). Hmm
 haxelib run hmm install
 ```
 
-You can then use webpack dev server with `npm start`. Other scripts (watching without webpack, cordova builds, tests) are available in [package.json](/package.json).
+You can then use webpack dev server with `npm start`. Other scripts (watching without webpack, tests) are available in [package.json](/package.json).
 
 ### Libs/forks used to handle new features
 
@@ -96,14 +96,11 @@ Tests coverage
 You can browse this repository for an example (although a little incomplete).
 Note: this does not include routing and pages (rich views) atm.
 
-* `cordova/` - Cordova project files
-	* `www/` - Should not contain sources, as this will be cleared and populated by webpack
 * `public/` - Public resources (images, fonts, etc.)
 * `res/` - Build resources, to be transformed via webpack
 	* `scss/` - SCSS sources not tied to a specific component
 	* `index.pug` - Root template for the html output
 * `src/` - Haxe (and SCSS) sources
-	* `cordova/` - Cordova externs without their own lib
 	* `dto/` - Typedefs (and abstract enums) used as data transfer objects
 	* `store/` - Redux store files
 		* `middleware/`
