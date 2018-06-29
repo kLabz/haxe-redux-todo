@@ -4,9 +4,9 @@
 -lib reselect
 -lib event-types
 -lib js-object
+-lib tink_hxx
 
 # Additional react/redux features
--lib redux-thunk
 -lib redux-connect
 
 -D react_hot

@@ -4,7 +4,6 @@ const buildMode = process.env.NODE_ENV || 'development';
 const buildTarget = process.env.TARGET || 'web';
 
 const isProd = buildMode === 'production';
-console.log(isProd);
 const isCordova = buildTarget.startsWith('cordova');
 
 const sourcemapsMode = isProd ? 'eval-source-map' : undefined;
@@ -16,15 +15,13 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+const useFriendly = true;
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const haxeFormatter = require('haxe-loader/errorFormatter');
+const haxeTransformer = require('haxe-loader/errorTransformer');
+
 const extractCSS = new ExtractTextPlugin('app.css');
-const copyPlugin = new CopyWebpackPlugin([
-	{from: 'public/img', to: 'img'},
-	// {from: 'public/favicon.png', to: 'favicon.png'}
-]);
-const cleanCordovaPlugin = new CleanWebpackPlugin(['cordova/www/*'], {
-	// verbose: true,
-	dry: false
-});
+const cleanCordovaPlugin = new CleanWebpackPlugin(['cordova/www/*'], {dry: false});
 
 module.exports = {
 	entry: {
@@ -42,6 +39,7 @@ module.exports = {
 	devtool: sourcemapsMode,
 	devServer: {
 		contentBase: dist,
+		quiet: useFriendly,
 		compress: true,
 		port: 9050,
 		https: true,
@@ -54,6 +52,7 @@ module.exports = {
 				test: /\.hxml$/,
 				loader: 'haxe-loader',
 				options: {
+					emitStdoutAsWarning: true,
 					extra: `-D build_mode=${buildMode}`
 						+ (!isProd ? ' -debug' : '')
 						+ (isCordova ? ' -D cordova' : '')
@@ -102,6 +101,17 @@ module.exports = {
 			template: '!!pug-loader!res/index.pug'
 		}),
 	]
-	.concat(isCordova ? [cleanCordovaPlugin] : [copyPlugin])
+	.concat(useFriendly ? [
+		new FriendlyErrorsWebpackPlugin({
+			compilationSuccessInfo: {
+				messages: [
+					`Your application is running here: https://localhost:${9050}`
+				]
+			},
+			additionalTransformers: [haxeTransformer],
+			additionalFormatters: [haxeFormatter]
+		})
+	] : [])
+	.concat(isCordova ? [cleanCordovaPlugin] : [])
 	.concat(isProd ? [extractCSS] : []),
 };

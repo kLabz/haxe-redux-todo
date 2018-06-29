@@ -1,0 +1,9 @@
+-lib haxe-loader:git:git@github.com:kLabz/webpack-haxe-loader.git#fork
+-lib react:git:git@github.com:kLabz/haxe-react#next
+-lib redux:git:git@github.com:elsassph/haxe-redux.git
+
+-lib reselect
+-lib event-types
+-lib js-object
+-lib redux-connect
+

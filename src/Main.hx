@@ -1,7 +1,7 @@
 package;
 
 import js.Browser;
-import eventtypes.CordovaEventType;
+import eventtypes.cordova.CordovaEventType;
 import react.ReactDOM;
 import react.ReactMacro.jsx;
 import redux.react.Provider;
