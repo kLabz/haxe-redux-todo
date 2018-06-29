@@ -4,7 +4,6 @@ import js.Browser;
 import eventtypes.CordovaEventType;
 import react.ReactDOM;
 import react.ReactMacro.jsx;
-import redux.Store;
 import redux.react.Provider;
 import store.AppStore;
 import view.comp.footer.Footer;
@@ -37,7 +36,8 @@ class Main {
 		Browser.document.body.dataset.target = 'dev-web';
 		#end
 
-		var app = ReactDOM.render(jsx('
+		#if (debug && react_hot) var app = #end
+		ReactDOM.render(jsx('
 			<Provider store=$store>
 				<>
 					<TodoList />
