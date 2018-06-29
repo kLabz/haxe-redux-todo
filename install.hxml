@@ -7,3 +7,6 @@
 -lib js-object
 -lib redux-connect
 
+# tests
+-lib autotest:git:git@github.com:kLabz/autotest.git
+-lib enzyme
