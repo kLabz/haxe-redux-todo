@@ -1,15 +1,21 @@
 -js .build/test.js
--main test.Tests
 
 -cp src
 
 -lib enzyme
--lib buddy
+-lib autotest
 -lib react
 -lib redux
+-lib reselect
+-lib event-types
+-lib js-object
+
+# Additional react/redux features
+-lib redux-connect
 
 -D nodejs
 -D buddy-colors
+-D redux_test_coverage
 
 -debug
 

@@ -1,10 +1,20 @@
--lib modular
+-lib haxe-loader
 -lib react
 -lib redux
 -lib reselect
+-lib event-types
+-lib js-object
+-lib tink_hxx
+
+# Additional react/redux features
+-lib redux-connect
+
+-D react_hot
+-D modular_nomaps
+-D webpack
 
 -cp src
 -main Main
--debug
 
--js bin/index.js
+-js .build/index.js
+

@@ -1,0 +1,73 @@
+@import 'variables';
+
+html {
+	width: 100%;
+	height: 100%;
+
+	// Warning: there is no support for landscape mode atm
+	// Notes: 18px for 360px width, 20rem == 100vw
+	font-size: 5vw; // 5vmin;
+
+	font-family: sans-serif;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	color: $color-text-primary;
+	background: $color-bg-primary;
+	padding-bottom: $footer-size;
+
+	& > #body {
+		width: 100%;
+		height: 100%;
+	}
+
+	&::before {
+		content: attr(data-target);
+		position: absolute;
+		top: .5rem;
+		right: .5rem;
+		font-size: .7rem;
+		color: $color-text-faded;
+	}
+}
+
+* {
+	box-sizing: border-box;
+}
+
+a {
+	color: $color-accent;
+}
+
+// Trick to display a mobile-like screen on desktops
+// Warning: vh / vw units cannot be used on the application! Same for fixed position.
+// Emulating vw is still possible, though (20rem = 100vw)
+@media screen and (min-width: 600px) {
+	$screen-width: 360px;
+	$screen-height: 640px;
+
+	html {
+		background: $color-bg-faded;
+		min-height: $screen-height;
+		font-size: 18px; // 5vw/5vmin on 360px
+	}
+
+	body {
+		position: relative;
+		width: $screen-width;
+		height: $screen-height;
+
+		box-shadow: 0 0 3px #0A0A0A;
+
+		// Center false screen
+		margin: auto;
+		margin-top: calc(50vh - #{$screen-height / 2});
+
+		// Force inner margins to be based on the body, not the html
+		padding: 0.1px;
+		padding-bottom: $footer-size;
+	}
+}

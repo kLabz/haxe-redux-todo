@@ -1,0 +1,42 @@
+@import 'variables';
+
+form {
+	display: block;
+	position: absolute;
+	bottom: 0;
+	width: 20rem;
+	font-size: 1.2rem;
+	text-align: center;
+	line-height: $footer-size;
+	color: $color-text-inverted;
+	background: $color-bg-inverted;
+
+	& > input {
+		display: inline-block;
+		vertical-align: middle;
+		width: 16rem;
+		margin-right: .5rem;
+		border: none;
+		border-bottom: 2px solid $color-bg-light;
+		color: inherit;
+		font-size: inherit;
+		line-height: 1.5;
+
+		&:focus {
+			outline: none;
+			border-bottom-color: $color-accent;
+		}
+	}
+
+	& > button {
+		display: inline-block;
+		vertical-align: middle;
+		border: none;
+		width: 2rem;
+		height: 2rem;
+		font-weight: bold;
+		font-size: inherit;
+		color: $color-text-primary;
+		background: $color-accent;
+	}
+}

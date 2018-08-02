@@ -205,20 +205,6 @@ They will return an empty node at runtime if you do not provide any children, an
 
 ### HOC composition
 
-#### Note
-
-HOC will not pass automatically their own props to their children, you will have to do so manually (`ReactUtil.copy()` can help).
-
-Example:
-```haxe
-	static function mapStateToProps(state:ApplicationState, ownProps:FilterLinkProps):Partial<LinkProps>
-	{
-		return copyWithout(ownProps, {
-			active: ownProps.filter == state.todoList.visibilityFilter
-		}, ['children']);
-	}
-```
-
 #### Composition hardcoded inside a connector
 
 You can use a connector accepting ownProps as `TComponent` for another connector.
