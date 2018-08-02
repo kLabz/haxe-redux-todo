@@ -14,11 +14,6 @@ Javascript dependencies are handled by npm.
 npm install
 ```
 
-For haxe, this project is using [`hmm`](https://github.com/andywhite37/hmm). Hmm helps a lot with dealing with forks and small libraries that this project uses.
-```
-haxelib run hmm install
-```
-
 You can then use webpack dev server with `npm start`. Other scripts (watching without webpack, tests) are available in [package.json](/package.json).
 
 ### Libs/forks used to handle new features
